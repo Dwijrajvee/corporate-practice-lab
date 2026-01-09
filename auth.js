@@ -1,7 +1,7 @@
 console.log("auth.js loaded ✅");
 
 const SUPABASE_URL = "https://zfvrszqwuziwmunayfrv.supabase.co";
-const SUPABASE_KEY = "PASTE_FULL_PUBLISHABLE_KEY_HERE";
+const SUPABASE_KEY = "sb_publishable_JXB2Q0QQAF-qToc6Rl8tqA_zy27wji3";
 
 const supabaseClient = supabase.createClient(
   SUPABASE_URL,
