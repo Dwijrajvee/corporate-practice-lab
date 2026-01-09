@@ -60,20 +60,26 @@
     <button onclick="login()">Login with College Email</button>
   </div>
 
-  <script>
-  const supabaseClient = supabase.createClient(
-    "https://YOUR_PROJECT_ID.supabase.co",
-    "YOUR_PUBLISHABLE_ANON_KEY"
-  );
+ <script>
+  const SUPABASE_URL = "https://zfvrszqwuziwmunayfrv.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_JXB2Q0QQAF-qToc6Rl8tqA_zy27wji3";
+
+  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   async function login() {
-    await supabaseClient.auth.signInWithOAuth({
+    const { data, error } = await supabaseClient.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: window.location.origin + "/dashboard.html"
-      }
+        redirectTo: window.location.origin + "/dashboard.html",
+      },
     });
+
+    if (error) {
+      alert("Login error: " + error.message);
+      console.log(error);
+    }
   }
 </script>
+
 </body>
 </html>
