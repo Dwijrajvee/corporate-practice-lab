@@ -60,31 +60,8 @@
     <button onclick="login()">Login with College Email</button>
   </div>
 
-<script>
-  const SUPABASE_URL = "https://zfvrszqwuziwmunayfrv.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_JXB2Q0QQAF-qToc6Rl8tqA_zy27wji3";
+<button onclick="login()">Login with College Email</button>
 
-  const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-  async function login() {
-    alert("Login button clicked ✅"); // just for testing
-
-    const { data, error } = await supabaseClient.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: window.location.origin + "/dashboard.html",
-        skipBrowserRedirect: true
-      }
-    });
-
-    if (error) {
-      alert("Login error: " + error.message);
-      console.log(error);
-      return;
-    }
-
-    // Force redirect manually
-    window.location.assign(data.url);
-  }
-</script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="/auth.js"></script>
 
