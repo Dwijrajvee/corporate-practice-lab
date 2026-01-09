@@ -2,25 +2,89 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Corporate Practice Lab</title>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
   <style>
-    body { font-family: Arial, sans-serif; background:#f5f7fa; display:flex; justify-content:center; align-items:center; height:100vh; margin:0; }
-    .card { background:white; padding:40px; border-radius:10px; width:100%; max-width:420px; text-align:center; box-shadow:0 10px 25px rgba(0,0,0,0.1); }
-    p { color:#555; margin-bottom:30px; }
-    button { background:#2563eb; color:white; border:none; padding:12px 20px; border-radius:6px; font-size:16px; width:100%; cursor:pointer; }
-    button:hover { background:#1e40af; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .card {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    h1 { margin-bottom: 10px; }
+    p { color: #555; margin-bottom: 30px; }
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 16px;
+      width: 100%;
+      cursor: pointer;
+    }
+    button:hover { background: #1e40af; }
   </style>
 </head>
 
 <body>
+
   <div class="card">
     <h1>Corporate Practice Lab</h1>
     <p>Simulated corporate law practice for students</p>
-    <button onclick="login()">Login with College Email</button>
+    <button id="loginBtn">Login with College Email</button>
   </div>
 
-  <!-- load scripts ONCE, at the end -->
-  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-  <script src="./auth.js"></script>
+  <script>
+    // --- 1. CONFIGURATION ---
+    // PASTE YOUR KEYS HERE
+    const SUPABASE_URL = "https://zfvrszqwuziwmunayfrv.supabase.co";
+    const SUPABASE_KEY = "sb_publishable_JXB2Q0QQAF-qToc6Rl8tqA_zy27wji3"; 
+
+    // --- 2. INITIALIZE SUPABASE ---
+    console.log("Initializing Supabase...");
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // --- 3. LOGIN FUNCTION ---
+    async function login() {
+      console.log("Login button clicked ✅");
+      
+      const { data, error } = await supabaseClient.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: window.location.origin + "/dashboard.html",
+        },
+      });
+
+      if (error) {
+        alert("Login error: " + error.message);
+        console.error(error);
+      }
+    }
+
+    // --- 4. ATTACH CLICK EVENT ---
+    // This ensures the button works even if the page loads slowly
+    document.getElementById("loginBtn").addEventListener("click", login);
+    
+    // Also attach to window just in case
+    window.login = login;
+    
+    console.log("Script loaded and ready ✅");
+  </script>
+
 </body>
 </html>
