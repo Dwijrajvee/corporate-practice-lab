@@ -8,8 +8,9 @@
 
   <style>
     body {
+      /* CHANGING BACKGROUND TO ORANGE TO PROVE UPDATE */
+      background: #ffaa00; 
       font-family: Arial, sans-serif;
-      background: #f5f7fa;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -25,8 +26,6 @@
       text-align: center;
       box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
-    h1 { margin-bottom: 10px; }
-    p { color: #555; margin-bottom: 30px; }
     button {
       background: #2563eb;
       color: white;
@@ -37,53 +36,47 @@
       width: 100%;
       cursor: pointer;
     }
-    button:hover { background: #1e40af; }
   </style>
 </head>
 
 <body>
 
   <div class="card">
-    <h1>Corporate Practice Lab</h1>
-    <p>Simulated corporate law practice for students</p>
+    <h1>DEBUG MODE</h1>
+    <p>If background is ORANGE, code is updated.</p>
     <button id="loginBtn">Login with College Email</button>
   </div>
 
   <script>
-    // --- 1. CONFIGURATION ---
-    // PASTE YOUR KEYS HERE
+    // 1. Alert to prove Script started
+    alert("Step 1: Script is running!");
+
     const SUPABASE_URL = "https://zfvrszqwuziwmunayfrv.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdnJzenF3dXppd211bmF5ZnJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5NTMzNTYsImV4cCI6MjA4MzUyOTM1Nn0.0EGxBLGH8nqXCUPyMV9cJQJLM6oWCBJXpDcIUCDVU6I"; 
+    // I put your FULL key here automatically for you
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdnJzenF3dXppd211bmF5ZnJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5NTMzNTYsImV4cCI6MjA4MzUyOTM1Nn0.0EGxBLGH8nqXCUPyMV9cJQJLM6oWCBJXpDcIUCDVU6I";
 
-    // --- 2. INITIALIZE SUPABASE ---
-    console.log("Initializing Supabase...");
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    try {
+      const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      alert("Step 2: Supabase Initialized Success!");
 
-    // --- 3. LOGIN FUNCTION ---
-    async function login() {
-      console.log("Login button clicked ✅");
-      
-      const { data, error } = await supabaseClient.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: window.location.origin + "/dashboard.html",
-        },
-      });
+      async function login() {
+        alert("Step 3: Button Clicked! Attempting Google...");
+        
+        const { data, error } = await supabaseClient.auth.signInWithOAuth({
+          provider: "google",
+          options: {
+            redirectTo: window.location.origin + "/dashboard.html",
+          },
+        });
 
-      if (error) {
-        alert("Login error: " + error.message);
-        console.error(error);
+        if (error) alert("Error: " + error.message);
       }
-    }
 
-    // --- 4. ATTACH CLICK EVENT ---
-    // This ensures the button works even if the page loads slowly
-    document.getElementById("loginBtn").addEventListener("click", login);
-    
-    // Also attach to window just in case
-    window.login = login;
-    
-    console.log("Script loaded and ready ✅");
+      document.getElementById("loginBtn").addEventListener("click", login);
+
+    } catch (err) {
+      alert("CRITICAL ERROR: " + err.message);
+    }
   </script>
 
 </body>
