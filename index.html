@@ -61,19 +61,19 @@
   </div>
 
   <script>
-    const supabase = supabase.createClient(
-      "https://zfvrszqwuziwmunayfrv.supabase.co",
-      "sb_publishable_JXB2Q0QQAF-qToc6Rl8tqA_zy27wji3"
-    );
+  const supabaseClient = supabase.createClient(
+    "https://YOUR_PROJECT_ID.supabase.co",
+    "YOUR_PUBLISHABLE_ANON_KEY"
+  );
 
-    async function login() {
-      await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: window.location.origin + "/dashboard.html"
-        }
-      });
-    }
-  </script>
+  async function login() {
+    await supabaseClient.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin + "/dashboard.html"
+      }
+    });
+  }
+</script>
 </body>
 </html>
