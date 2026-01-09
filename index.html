@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>Corporate Practice Lab</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -14,42 +16,64 @@
       height: 100vh;
       margin: 0;
     }
+
     .card {
       background: white;
       padding: 40px;
       border-radius: 10px;
       width: 100%;
       max-width: 420px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
       text-align: center;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
     }
+
     h1 {
       margin-bottom: 10px;
     }
+
     p {
       color: #555;
       margin-bottom: 30px;
     }
+
     button {
       background: #2563eb;
       color: white;
       border: none;
       padding: 12px 20px;
       border-radius: 6px;
-      cursor: pointer;
       font-size: 16px;
       width: 100%;
+      cursor: pointer;
     }
+
     button:hover {
       background: #1e40af;
     }
   </style>
 </head>
+
 <body>
   <div class="card">
     <h1>Corporate Practice Lab</h1>
     <p>Simulated corporate law practice for students</p>
-    <button>Login with College Email</button>
+    <button onclick="login()">Login with College Email</button>
   </div>
+
+  <script>
+    const supabase = supabase.createClient(
+      "https://zfvrszqwuziwmunayfrv.supabase.co",
+      "sb_publishable_JXB2Q0QQAF-qToc6Rl8tqA_zy27wji3"
+    );
+
+    async function login() {
+      await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: window.location.origin + "/dashboard.html"
+        }
+      });
+    }
+  </script>
 </body>
 </html>
