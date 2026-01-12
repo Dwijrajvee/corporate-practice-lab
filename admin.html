@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Faculty Dashboard - CPL</title>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <style>
+    body { font-family: -apple-system, sans-serif; background: #f5f7fa; padding: 20px; }
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    h1 { color: #111827; }
+    
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th { text-align: left; padding: 12px; background: #f3f4f6; color: #374151; font-size: 0.9em; }
+    td { padding: 12px; border-bottom: 1px solid #e5e7eb; }
+    
+    .btn-view { background: #2563eb; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+    .btn-view:hover { background: #1d4ed8; }
+
+    /* Modal for Grading */
+    #gradingModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+    .modal-content { background: white; width: 80%; max-width: 600px; margin: 50px auto; padding: 30px; border-radius: 8px; max-height: 80vh; overflow-y: auto; }
+    .student-answer { background: #f9fafb; padding: 10px; border-left: 3px solid #2563eb; margin-bottom: 15px; white-space: pre-wrap; }
+    
+    textarea { width: 100%; height: 80px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px; }
+    .score-input { width: 60px; padding: 5px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <h1>🎓 Faculty Grading Portal</h1>
+      <a href="dashboard.html" style="color: #666; text-decoration: none;">&larr; Back to Dashboard</a>
+    </div>
+
+    <div class="card">
+      <h3>Pending Submissions</h3>
+      <table id="submissionsTable">
+        <thead>
+          <tr>
+            <th>Student Email</th>
+            <th>Submitted At</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <tr><td colspan="4">Loading submissions...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="gradingModal">
+    <div class="modal-content">
+      <h2 style="margin-top:0;">Grade Submission</h2>
+      <div id="studentWork"></div>
+      
+      <hr>
+      <h3>Faculty Feedback</h3>
+      <label>Score (0-10):</label>
+      <input type="number" id="gradeScore" class="score-input" max="10" min="0">
+      
+      <label style="display:block; margin-top:10px;">Comments:</label>
+      <textarea id="gradeComment" placeholder="Enter feedback for the student..."></textarea>
+      
+      <div style="margin-top:20px; text-align:right;">
+        <button onclick="closeModal()" style="background:transparent; border:1px solid #ccc; padding:8px 15px; border-radius:4px; cursor:pointer;">Cancel</button>
+        <button onclick="submitGrade()" style="background:#059669; color:white; border:none; padding:8px 15px; border-radius:4px; cursor:pointer;">Submit Grade</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = "https://zfvrszqwuziwmunayfrv.supabase.co";
+    // Your correct key
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdnJzenF3dXppd211bmF5ZnJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5NTMzNTYsImV4cCI6MjA4MzUyOTM1Nn0.0EGxBLGH8nqXCUPyMV9cJQJLM6oWCBJXpDcIUCDVU6I";
+    
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let currentAttemptId = null;
+
+    async function loadSubmissions() {
+      // 1. Check if Admin
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (!session) { window.location.href = "/index.html"; return; }
+      
+      const { data: profile } = await supabaseClient.from('profiles').select('role').eq('id', session.user.id).single();
+      
+      // Security Check: Kick them out if not admin
+      if (profile.role !== 'admin') { 
+        alert("Access Denied: Faculty only."); 
+        window.location.href = "/dashboard.html"; 
+        return; 
+      }
+
+      // 2. Fetch Submissions (Attempts)
+      const { data: attempts } = await supabaseClient
+        .from('attempts')
+        .select(`id, submitted_at, status, user_id`)
+        .eq('status', 'submitted')
+        .order('submitted_at', { ascending: false });
+
+      const tableBody = document.getElementById('tableBody');
+      tableBody.innerHTML = "";
+
+      if (!attempts || attempts.length === 0) {
+        tableBody.innerHTML = "<tr><td colspan='4'>No pending submissions.</td></tr>";
+        return;
+      }
+
+      for (const attempt of attempts) {
+        // Fetch email for this user
+        const { data: userProfile } = await supabaseClient.from('profiles').select('email').eq('id', attempt.user_id).single();
+        const email = userProfile ? userProfile.email : "Unknown";
+
+        const row = `<tr>
+          <td>${email}</td>
+          <td>${new Date(attempt.submitted_at).toLocaleDateString()}</td>
+          <td><button class="btn-view" onclick="openGrade('${attempt.id}')">Grade</button></td>
+        </tr>`;
+        tableBody.innerHTML += row;
+      }
+    }
+
+    async function openGrade(attemptId) {
+      currentAttemptId = attemptId;
+      const { data: response } = await supabaseClient.from('responses').select('*').eq('attempt_id', attemptId).single();
+      
+      if (!response) { alert("Error loading answers."); return; }
+
+      const html = `
+        <p><strong>1. Risks Identified:</strong></p>
+        <div class="student-answer">${response.risks || "No answer"}</div>
+        <p><strong>2. Clause Edits:</strong></p>
+        <div class="student-answer">${response.clause_edits || "No answer"}</div>
+        <p><strong>3. Client Email:</strong></p>
+        <div class="student-answer">${response.client_email || "No answer"}</div>
+      `;
+      
+      document.getElementById('studentWork').innerHTML = html;
+      document.getElementById('gradingModal').style.display = 'block';
+    }
+
+    async function submitGrade() {
+      const score = document.getElementById('gradeScore').value;
+      const comment = document.getElementById('gradeComment').value;
+
+      await supabaseClient.from('feedback').insert([{
+        attempt_id: currentAttemptId,
+        judgment: score,
+        prioritisation: 0,
+        communication: 0,
+        comments: comment
+      }]);
+
+      alert("Grade Saved!");
+      closeModal();
+      loadSubmissions(); // Refresh list
+    }
+
+    function closeModal() {
+      document.getElementById('gradingModal').style.display = 'none';
+    }
+
+    loadSubmissions();
+  </script>
+</body>
+</html>
