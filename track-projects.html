@@ -2,39 +2,57 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Projects Survival Guide - CPL</title>
+  <title>Projects Levels - CPL</title>
   <style>
-    body { font-family: -apple-system, system-ui, sans-serif; background: #f5f7fa; margin: 0; padding: 20px; line-height: 1.6; color: #1f2937; }
+    body { font-family: -apple-system, system-ui, sans-serif; background: #f5f7fa; margin: 0; padding: 20px; color: #1f2937; }
     .container { max-width: 900px; margin: 0 auto; }
     
-    /* NAV */
     .nav { margin-bottom: 20px; }
     .nav a { color: #666; text-decoration: none; font-size: 0.9rem; }
 
     /* HEADER */
-    .header-card { background: white; padding: 30px; border-radius: 12px; border-left: 6px solid #fbbf24; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; }
-    h1 { margin: 0; font-size: 1.8rem; color: #111827; }
-    .subtitle { color: #6b7280; margin-top: 5px; }
+    .header-card { 
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); 
+      color: white; padding: 40px; border-radius: 12px; margin-bottom: 40px; 
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+    }
+    h1 { margin: 0; font-size: 2.2rem; }
+    .progress-bar { background: rgba(255,255,255,0.2); height: 8px; border-radius: 4px; margin-top: 15px; max-width: 300px; }
+    .progress-fill { background: #fbbf24; height: 100%; border-radius: 4px; width: 20%; } /* 20% = Level 1 done */
 
-    /* CHEAT SHEET CARDS */
-    .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
-    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-    .card-title { font-weight: bold; color: #2563eb; margin-bottom: 10px; display: block; text-transform: uppercase; font-size: 0.85rem; }
+    /* LEVEL CARDS */
+    .level-card { 
+      background: white; padding: 0; border-radius: 12px; margin-bottom: 25px; 
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; overflow: hidden; position: relative;
+      transition: transform 0.2s; border: 1px solid #e5e7eb;
+    }
+    .level-card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
 
-    /* KEY SECTIONS LIST */
-    .section-list { list-style: none; padding: 0; margin: 0; }
-    .section-list li { margin-bottom: 12px; padding-left: 15px; border-left: 3px solid #e5e7eb; }
-    .section-list strong { color: #111827; }
+    .level-number { 
+      background: #f3f4f6; width: 80px; display: flex; flex-direction: column; 
+      align-items: center; justify-content: center; font-weight: 900; font-size: 1.5rem; color: #9ca3af;
+      border-right: 1px solid #e5e7eb;
+    }
+    .level-content { padding: 25px; flex: 1; }
+    
+    .level-title { font-weight: 800; font-size: 1.2rem; margin-bottom: 5px; color: #111827; }
+    .level-desc { color: #6b7280; font-size: 0.95rem; margin-bottom: 15px; }
+    
+    .tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; padding: 4px 8px; border-radius: 4px; margin-right: 10px; }
+    .tag-cheat { background: #eff6ff; color: #2563eb; }
+    .tag-task { background: #f0fdf4; color: #166534; }
 
-    /* PDF RESOURCE BUTTON */
-    .resource-box { background: #eff6ff; border: 1px dashed #3b82f6; padding: 20px; border-radius: 8px; text-align: center; margin: 30px 0; }
-    .btn-pdf { background: white; color: #2563eb; border: 1px solid #2563eb; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 10px; }
-    .btn-pdf:hover { background: #2563eb; color: white; }
+    /* STATUS STYLES */
+    .unlocked .level-number { background: #2563eb; color: white; }
+    .locked { opacity: 0.6; pointer-events: none; grayscale: 1; }
+    .locked .level-number { background: #e5e7eb; color: #9ca3af; }
 
-    /* ACTION */
-    .action-area { text-align: center; margin-top: 40px; }
-    .btn-start { background: #111827; color: white; text-decoration: none; padding: 15px 35px; border-radius: 8px; font-size: 1.1rem; font-weight: bold; display: inline-block; transition: transform 0.2s; }
-    .btn-start:hover { transform: translateY(-2px); }
+    .btn-action { 
+      text-decoration: none; background: #111827; color: white; padding: 8px 20px; 
+      border-radius: 6px; font-size: 0.9rem; font-weight: bold; float: right;
+    }
+    .btn-action:hover { background: #000; }
+
   </style>
 </head>
 <body>
@@ -43,73 +61,68 @@
     <div class="nav"><a href="dashboard.html">&larr; Back to Dashboard</a></div>
 
     <div class="header-card">
-      <h1>⚡ Projects Internship Survival Guide</h1>
-      <div class="subtitle">Don't memorize the Act. Understand the Ecosystem.</div>
+      <h1>⚡ Projects & Infrastructure</h1>
+      <p style="opacity:0.9; margin-top:5px;">Master the lifecycle of a Power Project, from Bid to Dispute.</p>
+      
+      <div style="margin-top:20px; font-size:0.9rem; font-weight:bold;">YOUR PROGRESS: Level 1/5</div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
     </div>
 
-    <p style="font-size: 1.1rem; color: #374151;">
-      Welcome to the Projects Team. In this department, we build things (Roads, Airports, Power Plants). 
-      Here is your "Day 1 Cheat Sheet" so you understand what the partners are talking about.
-    </p>
-
-    <h3 style="margin-top: 30px;">1. The 3 Acronyms You Will Hear Daily</h3>
-    <div class="grid-container">
-      <div class="card">
-        <span class="card-title">COD (Commercial Operation Date)</span>
-        <p style="margin:0; font-size:0.95rem;">
-          The "Birthday" of the project. Before COD, you are just spending money (construction). After COD, you start making money (selling power).<br>
-          <strong>Why it matters:</strong> If you miss the COD deadline, you pay huge penalties.
-        </p>
-      </div>
-      <div class="card">
-        <span class="card-title">Tariff (The Price)</span>
-        <p style="margin:0; font-size:0.95rem;">
-          The price at which electricity is sold (e.g., ₹2.50/unit). In modern projects, this is <strong>Fixed</strong> for 25 years. It almost never changes.
-        </p>
+    <div class="level-card unlocked">
+      <div class="level-number">01</div>
+      <div class="level-content">
+        <div class="level-title">The "Intern" Survival Guide</div>
+        <p class="level-desc">Don't feel lost. Learn the jargon (COD, Tariff, CERC) and how to navigate the Electricity Act.</p>
+        <div>
+          <span class="tag tag-cheat">📄 Cheat Sheet: Acronyms</span>
+          <span class="tag tag-task">📝 Task: Concept Quiz</span>
+        </div>
+        <a href="#" onclick="alert('You already passed the basics! Try Level 2.')" class="btn-action">Review</a>
       </div>
     </div>
 
-    <h3>2. The "Must-Know" Sections (Electricity Act, 2003)</h3>
-    <div class="card">
-      <p style="margin-top:0; color:#666;">You don't need to read the whole 200-page Act. Just mark these 3 sections:</p>
-      <ul class="section-list">
-        <li>
-          <strong>Section 63 (Bidding):</strong> The "Holy Grail." It says if the price was discovered via a transparent auction, the Government <em>must</em> accept it.
-        </li>
-        <li>
-          <strong>Section 79 (CERC):</strong> This tells you <em>where</em> to file a case. If your plant sells power to multiple states, you go to the Central Commission (CERC), not the State one.
-        </li>
-        <li>
-          <strong>Section 14 (Licensing):</strong> Who is allowed to transmit power? (Usually needs a license).
-        </li>
-      </ul>
+    <div class="level-card unlocked">
+      <div class="level-number">02</div>
+      <div class="level-content">
+        <div class="level-title">The "Change in Law" Notice</div>
+        <p class="level-desc">A new tax has hit the project. Draft a formal legal notice to claim compensation from the Govt.</p>
+        <div>
+          <span class="tag tag-cheat">📄 Cheat Sheet: Notice Structure</span>
+          <span class="tag tag-task">📝 Task: Drafting Simulation</span>
+        </div>
+        <a href="simulation-projects.html" class="btn-action">Start Level 2</a>
+      </div>
     </div>
 
-    <div class="resource-box">
-      <strong>📚 Your Reference Tool</strong>
-      <p style="margin:5px 0 0 0; font-size:0.9rem; color:#555;">
-        Real lawyers don't memorize. They look it up. Open this PDF and keep it ready in the next tab. You will need it for the simulation.
-      </p>
-      <a href="https://cercind.gov.in/Act-with-amendment.pdf" target="_blank" class="btn-pdf">
-        📄 Open Electricity Act (PDF)
-      </a>
+    <div class="level-card locked">
+      <div class="level-number">03</div>
+      <div class="level-content">
+        <div class="level-title">Negotiating the PPA</div>
+        <p class="level-desc">The Counterparty has sent a "killer" draft. Identify the 3 clauses that will bankrupt your client.</p>
+        <div>
+          <span class="tag tag-cheat">📄 Cheat Sheet: Risk Matrix</span>
+          <span class="tag tag-task">📝 Task: Redlining</span>
+        </div>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
     </div>
 
-    <h3>3. Your First Task</h3>
-    <div class="card" style="background: #fdf2f8; border-left: 4px solid #db2777;">
-      <strong>The Situation:</strong><br>
-      We represent a Solar Developer. The Government just increased taxes (GST) on solar panels. This hurts our profits.
-      <br><br>
-      <strong>Your Job:</strong><br>
-      The Partner wants you to draft a formal notice claiming this money back. You need to:<br>
-      1. Open the PDF above.<br>
-      2. Ctrl+F for "Change in Law" (or similar definitions).<br>
-      3. Calculate the claim amount.<br>
-      4. Draft the email.
+    <div class="level-card locked">
+      <div class="level-number">04</div>
+      <div class="level-content">
+        <div class="level-title">Commercial Awareness</div>
+        <p class="level-desc">Lawyers need to know math. Calculate the exact tariff impact of the Change in Law event.</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
     </div>
 
-    <div class="action-area">
-      <a href="simulation-projects.html" class="btn-start">Start the Simulation</a>
+    <div class="level-card locked">
+      <div class="level-number">05</div>
+      <div class="level-content">
+        <div class="level-title">The Termination Crisis</div>
+        <p class="level-desc">The Govt is threatening to cancel the contract. Write a strategic opinion to save the deal.</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
     </div>
 
   </div>
