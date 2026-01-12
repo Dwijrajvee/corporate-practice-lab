@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NDA Simulation - CPL</title>
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <style>
+    body { font-family: -apple-system, sans-serif; background: #f5f7fa; margin: 0; height: 100vh; display: flex; flex-direction: column; }
+    
+    /* TOP BAR */
+    .top-bar { background: #111827; color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .timer { font-weight: bold; color: #fbbf24; font-family: monospace; font-size: 1.2rem; }
+
+    /* MAIN LAYOUT: SPLIT SCREEN */
+    .container { display: flex; flex: 1; overflow: hidden; }
+    
+    /* LEFT: THE NDA DOCUMENT */
+    .doc-panel { flex: 1; background: white; padding: 40px; overflow-y: auto; border-right: 1px solid #ddd; }
+    .doc-paper { max-width: 600px; margin: 0 auto; line-height: 1.6; color: #333; }
+    .doc-paper h2 { margin-top: 0; text-align: center; text-transform: uppercase; }
+    .clause { margin-bottom: 20px; }
+    .clause-title { font-weight: bold; text-decoration: underline; }
+
+    /* RIGHT: THE ANSWER SHEET */
+    .task-panel { flex: 1; background: #f9fafb; padding: 30px; overflow-y: auto; }
+    .task-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; }
+    label { display: block; font-weight: bold; margin-bottom: 8px; color: #374151; }
+    textarea { width: 100%; height: 100px; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-family: sans-serif; }
+    
+    .btn-submit { background: #059669; color: white; width: 100%; padding: 15px; border: none; border-radius: 6px; font-size: 1.1rem; cursor: pointer; font-weight: bold; }
+    .btn-submit:hover { background: #047857; }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <div>📝 <strong>NDA Review Simulation</strong></div>
+    <div class="timer" id="timerDisplay">Time Left: 75:00</div>
+  </div>
+
+  <div class="container">
+    <div class="doc-panel">
+      <div class="doc-paper">
+        <h2>Non-Disclosure Agreement</h2>
+        <p><strong>This Agreement</strong> is made on [Date] between <strong>TechStart Inc.</strong> ("Discloser") and <strong>Investor Co.</strong> ("Recipient").</p>
+        
+        <div class="clause">
+          <div class="clause-title">1. Definition of Confidential Information</div>
+          <p>"Confidential Information" shall include all information shared by Discloser, whether written or oral. It shall NOT include information that is publicly known.</p>
+        </div>
+
+        <div class="clause">
+          <div class="clause-title">2. Obligations (THE TRAP)</div>
+          <p>Recipient agrees to keep information confidential for a period of 10 years. Recipient shall indemnify Discloser for ANY loss, regardless of cause.</p>
+        </div>
+
+        <div class="clause">
+          <div class="clause-title">3. No Compelled Disclosure Exception</div>
+          <p>Recipient is strictly prohibited from disclosing information to any court or government body under any circumstances.</p>
+        </div>
+        
+        <div class="clause">
+          <div class="clause-title">4. Governing Law</div>
+          <p>This agreement shall be governed by the laws of Singapore.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="task-panel">
+      <div class="task-card">
+        <label>1. Risk Identification</label>
+        <p style="font-size:0.9em; color:#666;">Identify top 3 risks in this NDA. Which ones are critical?</p>
+        <textarea id="risks" placeholder="Type your answer here..."></textarea>
+      </div>
+
+      <div class="task-card">
+        <label>2. Clause Edits</label>
+        <p style="font-size:0.9em; color:#666;">Rewrite the "No Compelled Disclosure" clause to make it safe.</p>
+        <textarea id="edits" placeholder="Draft your edit..."></textarea>
+      </div>
+
+      <div class="task-card">
+        <label>3. Client Email</label>
+        <p style="font-size:0.9em; color:#666;">Draft a short email to the client advising them on this NDA.</p>
+        <textarea id="email" placeholder="Dear Client..."></textarea>
+      </div>
+
+      <button class="btn-submit" onclick="submitSimulation()">SUBMIT ASSESSMENT</button>
+    </div>
+  </div>
+
+  <script>
+    // --- CONFIGURATION ---
+    const SUPABASE_URL = "https://zfvrszqwuziwmunayfrv.supabase.co";
+    // Using your CORRECT key
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdnJzenF3dXppd211bmF5ZnJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5NTMzNTYsImV4cCI6MjA4MzUyOTM1Nn0.0EGxBLGH8nqXCUPyMV9cJQJLM6oWCBJXpDcIUCDVU6I";
+    
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let currentAttemptId = null;
+
+    // --- 1. INITIALIZE PAGE ---
+    async function init() {
+      // Check Login
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (!session) { window.location.href = "/index.html"; return; }
+
+      // Get User ID
+      const userId = session.user.id;
+
+      // Find the Simulation ID (Grab the first one in the DB)
+      const { data: sims } = await supabaseClient.from('simulations').select('id').limit(1);
+      if (!sims || sims.length === 0) { alert("Error: No simulation found in DB. Please create one in Supabase."); return; }
+      const simulationId = sims[0].id;
+
+      console.log("Starting Simulation:", simulationId);
+
+      // CREATE ATTEMPT RECORD
+      const { data: attempt, error } = await supabaseClient
+        .from('attempts')
+        .insert([{ 
+          user_id: userId, 
+          simulation_id: simulationId,
+          status: 'started'
+        }])
+        .select()
+        .single();
+
+      if (error) { console.error(error); alert("Error starting simulation: " + error.message); }
+      else {
+        currentAttemptId = attempt.id;
+        console.log("Attempt Created:", currentAttemptId);
+      }
+    }
+
+    // --- 2. SUBMIT FUNCTION ---
+    async function submitSimulation() {
+      if (!currentAttemptId) return alert("System Error: Attempt ID not found.");
+
+      const risks = document.getElementById("risks").value;
+      const edits = document.getElementById("edits").value;
+      const email = document.getElementById("email").value;
+
+      // A. Save Responses
+      const { error: respError } = await supabaseClient
+        .from('responses')
+        .insert([{
+          attempt_id: currentAttemptId,
+          risks: risks,
+          clause_edits: edits,
+          client_email: email,
+          // filling required field 'not_change' with placeholder for now
+          not_change: "N/A"
+        }]);
+
+      if (respError) { alert("Save failed: " + respError.message); return; }
+
+      // B. Mark Attempt as Submitted
+      await supabaseClient
+        .from('attempts')
+        .update({ status: 'submitted', submitted_at: new Date() })
+        .eq('id', currentAttemptId);
+
+      alert("✅ Submission Received! Great job.");
+      window.location.href = "/dashboard.html";
+    }
+
+    // Run init on load
+    init();
+  </script>
+
+</body>
+</html>
