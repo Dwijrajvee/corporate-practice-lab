@@ -2,121 +2,152 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projects Simulation - CPL</title>
   <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
   <style>
     body { font-family: -apple-system, sans-serif; background: #f5f7fa; margin: 0; height: 100vh; display: flex; flex-direction: column; }
     
-    .top-bar { background: #1e3a8a; /* Dark Blue for Projects */ color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .top-bar { background: #1e3a8a; color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
     .timer { font-weight: bold; color: #fbbf24; font-family: monospace; font-size: 1.2rem; }
 
     .container { display: flex; flex: 1; overflow: hidden; }
     
-    /* LEFT: FACTS SHEET */
+    /* LEFT: FACTS & DOCUMENTS */
     .doc-panel { flex: 1; background: white; padding: 40px; overflow-y: auto; border-right: 1px solid #ddd; }
-    .fact-sheet { background: #eff6ff; padding: 20px; border-radius: 8px; border: 1px solid #bfdbfe; margin-bottom: 20px; }
-    .fact-title { color: #1e40af; font-weight: bold; margin-bottom: 5px; display: block; }
-
-    /* RIGHT: DRAFTING */
-    .task-panel { flex: 1; background: #f9fafb; padding: 30px; overflow-y: auto; }
-    .task-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 20px; }
-    label { display: block; font-weight: bold; margin-bottom: 8px; color: #374151; }
-    textarea { width: 100%; height: 150px; padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-family: monospace; line-height: 1.4; }
     
-    .btn-submit { background: #059669; color: white; width: 100%; padding: 15px; border: none; border-radius: 6px; font-size: 1.1rem; cursor: pointer; font-weight: bold; }
+    .fact-card { background: #eff6ff; padding: 15px; border-radius: 8px; border: 1px solid #bfdbfe; margin-bottom: 20px; }
+    .fact-title { color: #1e40af; font-weight: bold; display: block; margin-bottom: 5px; font-size: 0.9rem; text-transform: uppercase; }
+    
+    .clause-box { background: #f3f4f6; padding: 15px; border-left: 4px solid #4b5563; font-family: "Georgia", serif; font-style: italic; margin-bottom: 20px; color: #374151; font-size: 0.95rem; }
+    
+    .notification-box { border: 2px dashed #dc2626; padding: 15px; background: #fef2f2; margin-bottom: 20px; }
+
+    /* RIGHT: WORKSPACE */
+    .task-panel { flex: 1; background: #f9fafb; padding: 30px; overflow-y: auto; }
+    .task-card { background: white; padding: 25px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 25px; }
+    
+    h3 { margin-top: 0; color: #111827; }
+    label { display: block; font-weight: bold; margin-bottom: 8px; color: #374151; font-size: 0.9rem; }
+    p.instruction { color: #6b7280; font-size: 0.9rem; margin-bottom: 15px; }
+    
+    textarea { width: 100%; height: 120px; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-family: monospace; line-height: 1.5; box-sizing: border-box; }
+    input[type="text"] { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; margin-bottom: 10px; box-sizing: border-box; }
+
+    .btn-submit { background: #059669; color: white; width: 100%; padding: 15px; border: none; border-radius: 6px; font-size: 1.1rem; cursor: pointer; font-weight: bold; transition: background 0.2s; }
+    .btn-submit:hover { background: #047857; }
   </style>
 </head>
 <body>
 
   <div class="top-bar">
-    <div>⚡ <strong>Projects: Change in Law Notice</strong></div>
-    <div class="timer">Time Left: 45:00</div>
+    <div>⚡ <strong>Projects: Change in Law Claim</strong></div>
+    <div class="timer">Time Left: 60:00</div>
   </div>
 
   <div class="container">
     <div class="doc-panel">
-      <h2>Case Brief</h2>
+      <h2>Project Brief: "Operation Sunshine"</h2>
       
-      <div class="fact-sheet">
-        <span class="fact-title">Client:</span>
-        SolarPower India Pvt Ltd (Generator)
+      <div class="fact-card">
+        <span class="fact-title">The Project Data</span>
+        <ul>
+          <li><strong>Client:</strong> Adani Green Energy Ltd (Generator)</li>
+          <li><strong>Buyer:</strong> SECI (Solar Energy Corp of India)</li>
+          <li><strong>Capacity:</strong> 300 MW</li>
+          <li><strong>Location:</strong> Jaisalmer, Rajasthan</li>
+          <li><strong>Inverter Cost:</strong> ₹25 Lakhs per MW (Budgeted)</li>
+        </ul>
       </div>
 
-      <div class="fact-sheet">
-        <span class="fact-title">Counterparty:</span>
-        Madhya Pradesh Power Management Co. (Discom)
+      <div class="notification-box">
+        <span class="fact-title" style="color:#991b1b;">⚠️ The Trigger Event (Govt Notification)</span>
+        <p style="margin:5px 0 0 0;">
+          <strong>Date:</strong> 01 March 2024<br>
+          <strong>Ministry of Finance:</strong> "GST on Solar Inverters is hereby increased from <strong>5% to 12%</strong>, effective immediately."
+        </p>
       </div>
 
-      <p><strong>The Facts:</strong></p>
-      <ul>
-        <li><strong>PPA Date:</strong> 15 Jan 2024</li>
-        <li><strong>Event:</strong> On 01 Feb 2024, Ministry of Finance issued Notification No. 12/2024 increasing Basic Customs Duty (BCD) on Solar Modules from 0% to 20%.</li>
-        <li><strong>Impact:</strong> Project cost increased by ₹50 Crores.</li>
-      </ul>
+      <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ddd;">
 
-      <hr>
-
-      <h3>Relevant PPA Clause</h3>
-      <div style="background:#f3f4f6; padding:15px; border-left:4px solid #666; font-style:italic;">
-        <strong>Article 12: Change in Law</strong><br>
-        "12.1. 'Change in Law' means the occurrence of any of the following events after the Effective Date resulting into any additional recurring/non-recurring expenditure...<br>
-        (a) the enactment, coming into effect, adoption, promulgation, amendment, modification or repeal of any Law or regulation..."
-      </div>
+      <h3>Relevant PPA Clauses</h3>
       
-      <p style="color:red; font-size:0.9rem;"><strong>Warning:</strong> You must notify the Discom within 30 days of the event, otherwise the claim is waived.</p>
+      <div class="clause-box">
+        <strong>Article 12.1.1:</strong> "Change in Law" means the occurrence of any of the following events after the Effective Date resulting in additional expenditure to the Power Producer:<br>
+        (a) the enactment, coming into effect, adoption, promulgation, amendment, modification or repeal of any Law or regulation...
+      </div>
+
+      <div class="clause-box">
+        <strong>Article 12.2 (Relief):</strong> 
+        "The Party affected by a Change in Law shall be restored to the same economic position as if such Change in Law had not occurred."
+      </div>
     </div>
 
     <div class="task-panel">
       
       <div class="task-card">
-        <label>1. Legal Analysis</label>
-        <p style="font-size:0.9em; color:#666;">Does the Notification constitute a "Change in Law" under Article 12? Explain why briefly.</p>
-        <textarea id="analysis" placeholder="Yes, because..."></textarea>
+        <h3>1. The "Quantum" (Math Check)</h3>
+        <p class="instruction">
+          Before drafting, you must know how much to ask for. <br>
+          <strong>Calculate the total impact of the tax increase.</strong><br>
+          <em>(Hint: 300 MW × Cost/MW × Tax Difference)</em>
+        </p>
+        <label>Show your Calculation:</label>
+        <textarea id="calculation" placeholder="Step 1: Total Cost of Inverters = ...&#10;Step 2: Old Tax (5%) = ...&#10;Step 3: New Tax (12%) = ...&#10;Total Claim = ₹..."></textarea>
       </div>
 
       <div class="task-card">
-        <label>2. Draft the Notice (Body Paragraphs)</label>
-        <p style="font-size:0.9em; color:#666;">Draft the operative part of the notice to the Discom claiming the ₹50 Cr compensation. Be formal and firm.</p>
-        <textarea id="draft" placeholder="We write to inform you that..."></textarea>
+        <h3>2. Draft the Notice</h3>
+        <p class="instruction">Draft the "Notice of Change in Law" to SECI. You must:<br>
+        1. Cite the correct Clause (12.1).<br>
+        2. Reference the Govt Notification date.<br>
+        3. Demand "Restitution" of the amount calculated above.</p>
+        
+        <label>Subject Line:</label>
+        <input type="text" id="subject" placeholder="Notice under Article 12 regarding...">
+        
+        <label>Body of the Notice:</label>
+        <textarea id="draft" style="height: 200px;" placeholder="Dear Sir/Ma'am,&#10;&#10;We write to you on behalf of..."></textarea>
       </div>
 
-      <button class="btn-submit" onclick="submitSimulation()">SUBMIT NOTICE</button>
+      <button class="btn-submit" onclick="submitSimulation()">SUBMIT TO PARTNER</button>
     </div>
   </div>
 
   <script>
     // --- CONFIGURATION ---
     const SUPABASE_URL = "https://zfvrszqwuziwmunayfrv.supabase.co";
+    // Your Key
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdnJzenF3dXppd211bmF5ZnJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5NTMzNTYsImV4cCI6MjA4MzUyOTM1Nn0.0EGxBLGH8nqXCUPyMV9cJQJLM6oWCBJXpDcIUCDVU6I";
+    
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     async function submitSimulation() {
       const { data: { session } } = await supabaseClient.auth.getSession();
       if (!session) { alert("Please login first."); return; }
       
-      // Auto-create simulation entry for PPA if missing (Simplified for MVP)
-      // Note: In real app, we'd fetch the specific ID for 'Projects' simulation
-      // For now, we will save it generically to the responses table
-      
-      // 1. Get/Create Attempt
-      const { data: attempt } = await supabaseClient.from('attempts').insert([
+      // 1. Create Attempt
+      const { data: attempt, error } = await supabaseClient.from('attempts').insert([
         { user_id: session.user.id, status: 'submitted', submitted_at: new Date() } 
-        // Note: In a robust build, we would look up the specific simulation_id for 'Projects'
       ]).select().single();
 
+      if (error) { alert("Error: " + error.message); return; }
+
       // 2. Save Response
-      const analysis = document.getElementById("analysis").value;
+      const calc = document.getElementById("calculation").value;
+      const subject = document.getElementById("subject").value;
       const draft = document.getElementById("draft").value;
+
+      // We combine Subject + Body for the 'clause_edits' column to save space
+      const fullDraft = "SUBJECT: " + subject + "\n\n" + draft;
 
       await supabaseClient.from('responses').insert([{
         attempt_id: attempt.id,
-        risks: "PROJECTS TRACK: " + analysis, // Re-using columns for MVP
-        clause_edits: draft,
-        client_email: "N/A"
+        risks: "QUANTUM CALCULATION: \n" + calc, 
+        clause_edits: fullDraft,
+        client_email: "Projects Track Submission"
       }]);
 
-      alert("✅ Notice Drafted & Submitted!");
+      alert("✅ Work Product Submitted! The Partner will review it.");
       window.location.href = "/dashboard.html";
     }
   </script>
