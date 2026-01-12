@@ -18,9 +18,7 @@
       align-items: center;
       margin-bottom: 30px;
     }
-    .welcome-text {
-      color: #111827;
-    }
+    .welcome-text { color: #111827; }
     .card {
       background: white;
       padding: 25px;
@@ -29,6 +27,7 @@
       max-width: 600px;
       margin: 0 auto;
     }
+    /* THIS WAS THE BROKEN PART - FIXED NOW */
     .btn-start {
       background: #2563eb;
       color: white;
@@ -39,6 +38,8 @@
       margin-top: 15px;
       font-weight: 500;
     }
+    .btn-start:hover { background: #1d4ed8; }
+    
     .btn-logout {
       color: #dc2626;
       border: 1px solid #dc2626;
@@ -69,12 +70,14 @@
       <br><br>
       <strong>Time Limit:</strong> 75 Minutes
     </p>
-    <a href="simulation.html": <a href="simulation.html" class="btn-start">Start Simulation</a> class="btn-start">Start Simulation</a>
+    
+    <a href="simulation.html" class="btn-start">Start Simulation</a>
   </div>
 
   <script>
     // --- CONFIGURATION ---
     const SUPABASE_URL = "https://zfvrszqwuziwmunayfrv.supabase.co";
+    // Your CORRECT Key
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmdnJzenF3dXppd211bmF5ZnJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc5NTMzNTYsImV4cCI6MjA4MzUyOTM1Nn0.0EGxBLGH8nqXCUPyMV9cJQJLM6oWCBJXpDcIUCDVU6I";
     
     const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -84,10 +87,8 @@
       const { data: { session } } = await supabaseClient.auth.getSession();
       
       if (!session) {
-        // If not logged in, kick them back to login page
         window.location.href = "/index.html";
       } else {
-        // Show user email
         document.getElementById("userEmail").innerText = session.user.email;
       }
     }
@@ -98,7 +99,6 @@
       window.location.href = "/index.html";
     }
 
-    // Run check immediately
     checkSession();
   </script>
 
