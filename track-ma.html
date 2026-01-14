@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>M&A Track - CPL</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; background: #f5f7fa; margin: 0; padding: 20px; color: #1f2937; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .nav { margin-bottom: 20px; }
+    .nav a { color: #666; text-decoration: none; }
+
+    /* HEADER */
+    .header-card { 
+      background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%); 
+      color: white; padding: 40px; border-radius: 12px; margin-bottom: 40px; 
+      box-shadow: 0 4px 10px rgba(124, 58, 237, 0.2);
+    }
+    h1 { margin: 0; font-size: 2.2rem; }
+    .progress-bar { background: rgba(255,255,255,0.2); height: 8px; border-radius: 4px; margin-top: 15px; max-width: 300px; }
+    .progress-fill { background: #d8b4fe; height: 100%; border-radius: 4px; width: 0%; } 
+
+    /* LEVEL CARDS */
+    .level-card { 
+      background: white; padding: 0; border-radius: 12px; margin-bottom: 25px; 
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; overflow: hidden; position: relative;
+      transition: transform 0.2s; border: 1px solid #e5e7eb;
+    }
+    .level-card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+
+    .level-number { 
+      background: #f3f4f6; width: 80px; display: flex; flex-direction: column; 
+      align-items: center; justify-content: center; font-weight: 900; font-size: 1.5rem; color: #9ca3af;
+      border-right: 1px solid #e5e7eb;
+    }
+    .level-content { padding: 25px; flex: 1; }
+    
+    .level-title { font-weight: 800; font-size: 1.2rem; margin-bottom: 5px; color: #111827; }
+    .level-desc { color: #6b7280; font-size: 0.95rem; margin-bottom: 15px; }
+    
+    .tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; padding: 4px 8px; border-radius: 4px; margin-right: 10px; }
+    .tag-cheat { background: #f3e8ff; color: #7c3aed; }
+    .tag-task { background: #fdf4ff; color: #a21caf; }
+
+    /* STATUS STYLES */
+    .unlocked .level-number { background: #7c3aed; color: white; }
+    .locked { opacity: 0.6; pointer-events: none; grayscale: 1; }
+    .locked .level-number { background: #e5e7eb; color: #9ca3af; }
+
+    .btn-action { 
+      text-decoration: none; background: #111827; color: white; padding: 8px 20px; 
+      border-radius: 6px; font-size: 0.9rem; font-weight: bold; float: right;
+    }
+    .btn-action:hover { background: #000; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="nav"><a href="dashboard.html">&larr; Back to Dashboard</a></div>
+
+    <div class="header-card">
+      <h1>🤝 Mergers & Acquisitions</h1>
+      <p style="opacity:0.9; margin-top:5px;">Master the lifecycle of a Deal: From Term Sheet to Closing.</p>
+      
+      <div style="margin-top:20px; font-size:0.9rem; font-weight:bold;">YOUR PROGRESS: Level 0/5</div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+    </div>
+
+    <div class="level-card unlocked">
+      <div class="level-number">01</div>
+      <div class="level-content">
+        <div class="level-title">The Deal Lifecycle</div>
+        <p class="level-desc">Learn the 4 stages of every deal and the acronyms (SPA, SHA, CP) that govern them.</p>
+        <div>
+          <span class="tag tag-cheat">📄 Cheat Sheet: Deal Flow</span>
+          <span class="tag tag-task">📝 Task: Jargon Quiz</span>
+        </div>
+        <a href="level1-ma.html" class="btn-action">Start Level 1</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">02</div>
+      <div class="level-content">
+        <div class="level-title">Due Diligence (DD)</div>
+        <p class="level-desc">You are in the Data Room. Review the target company's contracts and find the "Deal Breaker."</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">03</div>
+      <div class="level-content">
+        <div class="level-title">The Shareholder Agreement (SHA)</div>
+        <p class="level-desc">Tag-Along vs. Drag-Along. Negotiate rights for a minority investor.</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">04</div>
+      <div class="level-content">
+        <div class="level-title">Cap Tables & Dilution</div>
+        <p class="level-desc">If a VC invests $1M at a $10M valuation, how much equity do they get? Don't get the math wrong.</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">05</div>
+      <div class="level-content">
+        <div class="level-title">The Boardroom Coup</div>
+        <p class="level-desc">The Founders are fighting. One wants to fire the other. Advise the Board on the legal path.</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
