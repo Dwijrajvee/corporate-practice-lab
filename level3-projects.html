@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Level 3: Negotiation - CPL</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; background: #f5f7fa; margin: 0; padding: 20px; line-height: 1.6; color: #1f2937; }
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    .nav { margin-bottom: 20px; }
+    .nav a { color: #666; text-decoration: none; font-size: 0.9rem; }
+
+    /* HEADER */
+    .header-card { background: white; padding: 30px; border-radius: 12px; border-left: 6px solid #dc2626; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 30px; }
+    h1 { margin: 0; font-size: 1.8rem; color: #111827; }
+
+    /* RISK MATRIX TABLE */
+    table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 30px; }
+    th { background: #1f2937; color: white; padding: 12px; text-align: left; }
+    td { padding: 12px; border-bottom: 1px solid #eee; }
+    tr:last-child td { border-bottom: none; }
+    .risk-dev { color: #dc2626; font-weight: bold; } /* Developer Risk */
+    .risk-buy { color: #16a34a; font-weight: bold; } /* Buyer Risk */
+
+    /* REDLINE CHALLENGE */
+    .challenge-box { background: white; padding: 25px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #e5e7eb; }
+    .clause-text { 
+      font-family: "Courier New", monospace; background: #f9fafb; padding: 15px; 
+      border-left: 4px solid #dc2626; margin: 15px 0; color: #374151; font-size: 0.95rem;
+    }
+    
+    .options label { display: block; margin: 10px 0; padding: 10px; border: 1px solid #eee; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+    .options label:hover { background: #f0f9ff; }
+    
+    .explanation { display: none; margin-top: 10px; padding: 10px; border-radius: 6px; font-size: 0.9rem; }
+    .correct-msg { background: #dcfce7; color: #166534; }
+    .wrong-msg { background: #fee2e2; color: #991b1b; }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="nav"><a href="track-projects.html">&larr; Back to Level Map</a></div>
+
+    <div class="header-card">
+      <h1>Level 3: The Art of Negotiation</h1>
+      <p>The Discom has sent a draft. It looks standard, but it's a trap. Your job is to fix it.</p>
+    </div>
+
+    <h3>1. The Golden Rule: "Who controls the risk pays for it."</h3>
+    <p>Before you redline, you must know what is fair. Here is the standard Market Practice for Risk Allocation:</p>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Risk Event</th>
+          <th>Who should bear it?</th>
+          <th>Why?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Land Acquisition Delay</td>
+          <td class="risk-dev">Developer</td>
+          <td>It's your job to build the plant.</td>
+        </tr>
+        <tr>
+          <td>Grid Unavailability</td>
+          <td class="risk-buy">Buyer (Discom)</td>
+          <td>The Grid is their property. If it breaks, they pay.</td>
+        </tr>
+        <tr>
+          <td>Change in Law (Taxes)</td>
+          <td class="risk-buy">Buyer (Discom)</td>
+          <td>Pass-through cost (reimbursed).</td>
+        </tr>
+        <tr>
+          <td>Solar Radiation Low</td>
+          <td class="risk-dev">Developer</td>
+          <td>You chose the site/technology.</td>
+        </tr>
+      </tbody>
+    </table>
+    
+    
+
+    <h3 style="margin-top: 40px;">2. Redline Simulation: Spot the Trap</h3>
+    
+    <div class="challenge-box">
+      <strong>⚠️ Trap #1: Grid Availability</strong>
+      <p>The Discom inserted this clause. Why is it dangerous?</p>
+      
+      <div class="clause-text">
+        "Clause 5.2: In the event of any Grid Failure or shutdown of the substation, the Developer shall NOT be entitled to any compensation or deemed generation payments."
+      </div>
+
+      <div class="options">
+        <label>
+          <input type="radio" name="trap1" onclick="checkAnswer(1, false)"> 
+          <strong>Accept it.</strong> Grid failures are Acts of God (Force Majeure), so no one pays.
+        </label>
+        <label>
+          <input type="radio" name="trap1" onclick="checkAnswer(1, true)"> 
+          <strong>Reject it.</strong> The Grid is the Discom's responsibility. We need "Deemed Generation" (to be paid as if we were generating).
+        </label>
+        <label>
+          <input type="radio" name="trap1" onclick="checkAnswer(1, false)"> 
+          <strong>Negotiate.</strong> Agree to 50% payment only.
+        </label>
+      </div>
+
+      <div id="ans1" class="explanation"></div>
+    </div>
+
+    <div class="challenge-box">
+      <strong>⚠️ Trap #2: Termination Payment</strong>
+      <p>They want to fire us. Look at the payout:</p>
+      
+      <div class="clause-text">
+        "Clause 13.1: If the Discom terminates this Agreement due to its own Default, it shall refund the Performance Bank Guarantee to the Developer."
+      </div>
+
+      <div class="options">
+        <label>
+          <input type="radio" name="trap2" onclick="checkAnswer(2, false)"> 
+          <strong>Accept it.</strong> Getting the Bank Guarantee back is standard protection.
+        </label>
+        <label>
+          <input type="radio" name="trap2" onclick="checkAnswer(2, true)"> 
+          <strong>Reject it.</strong> If <em>they</em> default, they must pay "Termination Compensation" (Debt + 150% Equity) to cover our sunk costs.
+        </label>
+      </div>
+
+      <div id="ans2" class="explanation"></div>
+    </div>
+
+    <div style="text-align:center; margin-top:30px;">
+        <a href="track-projects.html" style="background:#111827; color:white; padding:12px 25px; border-radius:6px; text-decoration:none;">Finish Level 3</a>
+    </div>
+
+  </div>
+
+  <script>
+    function checkAnswer(q, isCorrect) {
+      const box = document.getElementById("ans" + q);
+      box.style.display = "block";
+      if (isCorrect) {
+        box.className = "explanation correct-msg";
+        box.innerHTML = "<strong>✅ Correct!</strong> This is the market standard. Never accept risk you can't control.";
+      } else {
+        box.className = "explanation wrong-msg";
+        box.innerHTML = "<strong>❌ Incorrect.</strong> Review the Risk Matrix above. Why should we pay for their mistake?";
+      }
+    }
+  </script>
+
+</body>
+</html>
