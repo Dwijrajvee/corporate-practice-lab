@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Level 3: SHA Negotiation - CPL</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; background: #f5f7fa; margin: 0; padding: 20px; line-height: 1.6; color: #1f2937; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .nav { margin-bottom: 20px; }
+    .nav a { color: #666; text-decoration: none; }
+
+    /* HEADER */
+    .header-card { background: white; padding: 30px; border-radius: 12px; border-left: 6px solid #d97706; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 30px; }
+    h1 { margin: 0; font-size: 1.8rem; color: #111827; }
+
+    /* LESSON */
+    .concept-box { background: #fffbeb; border: 1px solid #fcd34d; color: #92400e; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+
+    /* REDLINE UI */
+    .challenge-box { background: white; padding: 25px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    
+    .clause-text { 
+      font-family: "Courier New", monospace; background: #f3f4f6; padding: 15px; 
+      border-left: 4px solid #d97706; margin: 15px 0; color: #374151; font-size: 0.95rem;
+    }
+    
+    .options label { display: block; margin: 10px 0; padding: 12px; border: 1px solid #eee; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+    .options label:hover { background: #fff7ed; border-color: #fdba74; }
+    
+    .explanation { display: none; margin-top: 15px; padding: 15px; border-radius: 6px; font-size: 0.9rem; }
+    .correct-msg { background: #ecfdf5; color: #065f46; border: 1px solid #6ee7b7; }
+    .wrong-msg { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+
+    .btn-finish { display: none; text-align: center; margin-top: 30px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="nav"><a href="track-ma.html">&larr; Back to M&A Map</a></div>
+
+    <div class="header-card">
+      <h1>Level 3: The Shareholder Fight</h1>
+      <p>You represent a Minority Investor (10%). The Founder (60%) wants total control. Protect your exit rights.</p>
+    </div>
+
+    <div class="concept-box">
+      <strong>⚠️ The Concepts: Tag vs. Drag</strong>
+      <ul style="margin-top:5px; padding-left:20px;">
+        <li><strong>Tag Along (Good for you):</strong> If Founder sells to Google, you can "Tag Along" and sell your 10% too. (Prevents you from being stuck with a stranger).</li>
+        <li><strong>Drag Along (Dangerous):</strong> If Founder sells to Google, they can "Drag" you and force you to sell even if you don't want to.</li>
+      </ul>
+    </div>
+
+    <div class="challenge-box">
+      <strong>⚔️ Negotiation 1: The "Forced Sale" Trap</strong>
+      <p>The Founder wants the right to force you to sell at ANY price.</p>
+      
+      <div class="clause-text">
+        "Clause 12 (Drag Along): If the Majority Shareholder decides to sell the Company to a Third Party, the Minority Shareholders <strong>MUST sell their shares at the same price</strong> offered to the Majority."
+      </div>
+
+      <div class="options">
+        <label>
+          <input type="radio" name="q1" onclick="checkAnswer(1, false)"> 
+          <strong>Accept it.</strong> Standard clause. If they sell, I should sell.
+        </label>
+        <label>
+          <input type="radio" name="q1" onclick="checkAnswer(1, true)"> 
+          <strong>Negotiate (Add Floor Price).</strong> "Yes, but ONLY if the price is at least 2x my investment." (I won't be dragged into a loss).
+        </label>
+      </div>
+
+      <div id="ans1" class="explanation"></div>
+    </div>
+
+    <div class="challenge-box">
+      <strong>⚔️ Negotiation 2: The "Left Behind" Risk</strong>
+      <p>The SHA is missing a clause. The Founder sells 60% to a PE Fund. You are now stuck with a PE Fund you don't know.</p>
+      
+      <div class="clause-text">
+        [NO TAG ALONG CLAUSE FOUND IN AGREEMENT]
+      </div>
+
+      <div class="options">
+        <label>
+          <input type="radio" name="q2" onclick="checkAnswer(2, false)"> 
+          <strong>Do Nothing.</strong> It's fine, I'll stay invested.
+        </label>
+        <label>
+          <input type="radio" name="q2" onclick="checkAnswer(2, true)"> 
+          <strong>Insert "Tag Along" Right.</strong> "If Founder sells, I have the right (but not obligation) to sell my shares on the same terms."
+        </label>
+      </div>
+
+      <div id="ans2" class="explanation"></div>
+    </div>
+
+    <div id="finishBtn" class="btn-finish">
+        <a href="track-ma.html" style="background:#111827; color:white; padding:12px 25px; border-radius:6px; text-decoration:none; font-weight:bold;">Level 3 Complete - Return to Map</a>
+    </div>
+
+  </div>
+
+  <script>
+    let correctCount = 0;
+
+    function checkAnswer(q, isCorrect) {
+      const box = document.getElementById("ans" + q);
+      box.style.display = "block";
+      
+      if (box.dataset.answered) return;
+      box.dataset.answered = "true";
+
+      if (isCorrect) {
+        box.className = "explanation correct-msg";
+        if (q === 1) box.innerHTML = "<strong>✅ Correct!</strong> Never let someone force you to sell at a loss. Always set a Minimum Floor Price.";
+        if (q === 2) box.innerHTML = "<strong>✅ Correct!</strong> Without Tag Along, the Founder exits rich, and you are trapped in a zombie company.";
+        correctCount++;
+      } else {
+        box.className = "explanation wrong-msg";
+        box.innerHTML = "<strong>❌ Too Risky.</strong> You just lost control of your investment. Try again.";
+        box.dataset.answered = "";
+      }
+
+      if (correctCount === 2) {
+        document.getElementById("finishBtn").style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>
