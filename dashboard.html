@@ -10,7 +10,6 @@
     .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
     .welcome-text { color: #111827; }
     
-    /* NEW GRID LAYOUT */
     .tracks-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
     
     .track-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: transform 0.2s; }
@@ -21,12 +20,21 @@
     .track-desc { color: #6b7280; font-size: 0.9rem; line-height: 1.5; margin-bottom: 20px; }
     
     .btn-track { 
-      background: white; color: #2563eb; border: 1px solid #2563eb; 
+      background: white; border: 1px solid #2563eb; 
       padding: 8px 15px; border-radius: 6px; text-decoration: none; 
       font-weight: 500; display: inline-block; width: 100%; text-align: center;
       transition: all 0.2s;
     }
-    .btn-track:hover { background: #2563eb; color: white; }
+    
+    /* Unique Colors for Tracks */
+    .btn-ma { color: #7c3aed; border-color: #7c3aed; }
+    .btn-ma:hover { background: #7c3aed; color: white; }
+
+    .btn-projects { color: #2563eb; border-color: #2563eb; }
+    .btn-projects:hover { background: #2563eb; color: white; }
+
+    .btn-banking { color: #059669; border-color: #059669; }
+    .btn-banking:hover { background: #059669; color: white; }
 
     .btn-logout { color: #dc2626; border: 1px solid #dc2626; padding: 5px 15px; border-radius: 4px; background: transparent; cursor: pointer; }
   </style>
@@ -44,14 +52,14 @@
   <div class="tracks-grid">
     
     <div class="track-card">
-      <span class="track-icon">🏢</span>
-      <div class="track-title">General Corporate</div>
+      <span class="track-icon">🤝</span>
+      <div class="track-title">Mergers & Acquisitions (M&A)</div>
       <p class="track-desc">
-        <strong>Focus:</strong> Contracts, Due Diligence, Company Law.<br>
-        <strong>Key Acts:</strong> Companies Act 2013, Contract Act.<br>
-        <strong>Task:</strong> Review a Non-Disclosure Agreement (NDA).
+        <strong>Focus:</strong> Due Diligence, Shareholder Agreements, Deal Structuring.<br>
+        <strong>Key Acts:</strong> Companies Act 2013, FEMA.<br>
+        <strong>Levels:</strong> 5 Levels (Intern to Partner).
       </p>
-      <a href="track-gencorp.html" class="btn-track">Start Track</a>
+      <a href="track-ma.html" class="btn-track btn-ma">Start M&A Track</a>
     </div>
 
     <div class="track-card">
@@ -60,20 +68,20 @@
       <p class="track-desc">
         <strong>Focus:</strong> Power Projects, Concession Agreements.<br>
         <strong>Key Acts:</strong> Electricity Act 2003.<br>
-        <strong>Task:</strong> Change in Law Notice drafting.
+        <strong>Levels:</strong> 5 Levels (Intern to Partner).
       </p>
-      <a href="track-projects.html" class="btn-track">Start Track</a>
+      <a href="track-projects.html" class="btn-track btn-projects">Start Projects Track</a>
     </div>
 
     <div class="track-card">
       <span class="track-icon">💰</span>
       <div class="track-title">Banking & Finance</div>
       <p class="track-desc">
-        <strong>Focus:</strong> Loan Agreements, RBI Regulations.<br>
+        <strong>Focus:</strong> Loan Agreements, CPs, Security.<br>
         <strong>Key Acts:</strong> IBC 2016, SARFAESI Act.<br>
-        <strong>Task:</strong> Term Sheet Review.
+        <strong>Levels:</strong> 5 Levels (Intern to Partner).
       </p>
-      <a href="track-banking.html" class="btn-track">Enter Track</a>
+      <a href="track-banking.html" class="btn-track btn-banking">Start Banking Track</a>
     </div>
 
   </div>
