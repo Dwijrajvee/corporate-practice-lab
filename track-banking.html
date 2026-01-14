@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Banking Track - CPL</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; background: #f5f7fa; margin: 0; padding: 20px; color: #1f2937; }
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    .nav { margin-bottom: 20px; }
+    .nav a { color: #666; text-decoration: none; font-size: 0.9rem; }
+
+    /* HEADER */
+    .header-card { 
+      background: linear-gradient(135deg, #065f46 0%, #059669 100%); 
+      color: white; padding: 40px; border-radius: 12px; margin-bottom: 40px; 
+      box-shadow: 0 4px 10px rgba(5, 150, 105, 0.2);
+    }
+    h1 { margin: 0; font-size: 2.2rem; }
+    .progress-bar { background: rgba(255,255,255,0.2); height: 8px; border-radius: 4px; margin-top: 15px; max-width: 300px; }
+    .progress-fill { background: #34d399; height: 100%; border-radius: 4px; width: 0%; } 
+
+    /* LEVEL CARDS */
+    .level-card { 
+      background: white; padding: 0; border-radius: 12px; margin-bottom: 25px; 
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; overflow: hidden; position: relative;
+      transition: transform 0.2s; border: 1px solid #e5e7eb;
+    }
+    .level-card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+
+    .level-number { 
+      background: #f3f4f6; width: 80px; display: flex; flex-direction: column; 
+      align-items: center; justify-content: center; font-weight: 900; font-size: 1.5rem; color: #9ca3af;
+      border-right: 1px solid #e5e7eb;
+    }
+    .level-content { padding: 25px; flex: 1; }
+    
+    .level-title { font-weight: 800; font-size: 1.2rem; margin-bottom: 5px; color: #111827; }
+    .level-desc { color: #6b7280; font-size: 0.95rem; margin-bottom: 15px; }
+    
+    .tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; padding: 4px 8px; border-radius: 4px; margin-right: 10px; }
+    .tag-cheat { background: #ecfdf5; color: #047857; }
+    .tag-task { background: #f0f9ff; color: #0369a1; }
+
+    /* STATUS STYLES */
+    .unlocked .level-number { background: #059669; color: white; }
+    .locked { opacity: 0.6; pointer-events: none; grayscale: 1; }
+    .locked .level-number { background: #e5e7eb; color: #9ca3af; }
+
+    .btn-action { 
+      text-decoration: none; background: #111827; color: white; padding: 8px 20px; 
+      border-radius: 6px; font-size: 0.9rem; font-weight: bold; float: right;
+    }
+    .btn-action:hover { background: #000; }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="nav"><a href="dashboard.html">&larr; Back to Dashboard</a></div>
+
+    <div class="header-card">
+      <h1>💰 Banking & Finance</h1>
+      <p style="opacity:0.9; margin-top:5px;">Master the art of Debt, Security, and CPs.</p>
+      
+      <div style="margin-top:20px; font-size:0.9rem; font-weight:bold;">YOUR PROGRESS: Level 0/5</div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+    </div>
+
+    <div class="level-card unlocked">
+      <div class="level-number">01</div>
+      <div class="level-content">
+        <div class="level-title">The "CP" Survival Guide</div>
+        <p class="level-desc">Banking teams speak in code. Learn what CP, CS, and Security Trustee mean before you enter the room.</p>
+        <div>
+          <span class="tag tag-cheat">📄 Cheat Sheet: Loan Terms</span>
+          <span class="tag tag-task">📝 Task: Jargon Quiz</span>
+        </div>
+        <a href="level1-banking.html" class="btn-action">Start Level 1</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">02</div>
+      <div class="level-content">
+        <div class="level-title">The "CP" Checklist</div>
+        <p class="level-desc">The Bank won't release money until 50 documents are perfect. Review 3 key docs and flag errors.</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">03</div>
+      <div class="level-content">
+        <div class="level-title">Events of Default (EoD)</div>
+        <p class="level-desc">The "Material Adverse Effect" clause is too broad. Narrow it down to protect the Borrower.</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">04</div>
+      <div class="level-content">
+        <div class="level-title">Financial Covenants</div>
+        <p class="level-desc">Calculate the LTV (Loan-to-Value) and DSCR to see if the Borrower is healthy.</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">05</div>
+      <div class="level-content">
+        <div class="level-title">The Default Crisis</div>
+        <p class="level-desc">The Borrower missed a payment. Decide: Do we enforce security or restructure the debt?</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
