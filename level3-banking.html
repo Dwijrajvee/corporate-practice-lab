@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Level 3: EoD Negotiation - CPL</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; background: #f5f7fa; margin: 0; padding: 20px; line-height: 1.6; color: #1f2937; }
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    .nav { margin-bottom: 20px; }
+    .nav a { color: #666; text-decoration: none; font-size: 0.9rem; }
+
+    /* HEADER */
+    .header-card { background: white; padding: 30px; border-radius: 12px; border-left: 6px solid #b91c1c; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 30px; }
+    h1 { margin: 0; font-size: 1.8rem; color: #111827; }
+
+    /* LESSON */
+    .concept-box { background: #fef2f2; border: 1px solid #fecaca; color: #7f1d1d; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+
+    /* REDLINE UI */
+    .challenge-box { background: white; padding: 25px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    
+    .clause-text { 
+      font-family: "Courier New", monospace; background: #f3f4f6; padding: 15px; 
+      border-left: 4px solid #b91c1c; margin: 15px 0; color: #374151; font-size: 0.95rem;
+    }
+    
+    .options label { display: block; margin: 10px 0; padding: 12px; border: 1px solid #eee; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+    .options label:hover { background: #f0f9ff; border-color: #bae6fd; }
+    
+    .explanation { display: none; margin-top: 15px; padding: 15px; border-radius: 6px; font-size: 0.9rem; }
+    .correct-msg { background: #ecfdf5; color: #065f46; border: 1px solid #6ee7b7; }
+    .wrong-msg { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+
+    .btn-finish { display: none; text-align: center; margin-top: 30px; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="nav"><a href="track-banking.html">&larr; Back to Banking Map</a></div>
+
+    <div class="header-card">
+      <h1>Level 3: The "Nuclear" Clauses</h1>
+      <p>The Bank has sent a draft Loan Agreement. They want to be able to recall the loan for <em>any</em> reason. You need to narrow the scope.</p>
+    </div>
+
+    <div class="concept-box">
+      <strong>⚠️ The Concept: "Events of Default" (EoD)</strong>
+      <p style="margin:5px 0 0 0; font-size:0.95rem;">
+        An EoD allows the Bank to say: <em>"Give me my money back right now."</em><br>
+        <strong>Your Strategy:</strong> Add "Materiality" (only big problems count) and "Thresholds" (only debts over $1M count).
+      </p>
+    </div>
+
+    <div class="challenge-box">
+      <strong>⚔️ Negotiation 1: The "Catch-All" Clause</strong>
+      <p>The Bank wants to call a default if they "feel" insecure. This is too subjective.</p>
+      
+      <div class="clause-text">
+        "EoD 12.1: An Event of Default occurs if, in the sole opinion of the Bank, there is a Material Adverse Effect on the Borrower's business."
+      </div>
+
+      <div class="options">
+        <label>
+          <input type="radio" name="q1" onclick="checkAnswer(1, false)"> 
+          <strong>Accept it.</strong> The Bank is lending the money, so their opinion matters most.
+        </label>
+        <label>
+          <input type="radio" name="q1" onclick="checkAnswer(1, true)"> 
+          <strong>Reject it.</strong> "Sole opinion" is dangerous. It must be Objective (based on facts), not Subjective.
+        </label>
+        <label>
+          <input type="radio" name="q1" onclick="checkAnswer(1, false)"> 
+          <strong>Negotiate.</strong> Change it to "Reasonable Opinion of the Majority Lenders."
+        </label>
+      </div>
+
+      <div id="ans1" class="explanation"></div>
+    </div>
+
+    <div class="challenge-box">
+      <strong>⚔️ Negotiation 2: Cross Default</strong>
+      <p>The Bank says: "If you default on ANY other loan, you default on this one too."</p>
+      
+      <div class="clause-text">
+        "EoD 13.4: An Event of Default occurs if the Borrower defaults on <strong>any indebtedness</strong> owed to any third party."
+      </div>
+
+      <div class="options">
+        <label>
+          <input type="radio" name="q2" onclick="checkAnswer(2, false)"> 
+          <strong>Accept it.</strong> This is market standard for all loans.
+        </label>
+        <label>
+          <input type="radio" name="q2" onclick="checkAnswer(2, true)"> 
+          <strong>Negotiate (Add Threshold).</strong> Only if the other default is > $5 Million. I shouldn't lose a $100M loan because I missed a $50 credit card payment.
+        </label>
+      </div>
+
+      <div id="ans2" class="explanation"></div>
+    </div>
+
+    <div id="finishBtn" class="btn-finish">
+        <a href="track-banking.html" style="background:#111827; color:white; padding:12px 25px; border-radius:6px; text-decoration:none; font-weight:bold;">Level 3 Complete - Return to Map</a>
+    </div>
+
+  </div>
+
+  <script>
+    let correctCount = 0;
+
+    function checkAnswer(q, isCorrect) {
+      const box = document.getElementById("ans" + q);
+      box.style.display = "block";
+      
+      // Prevent multiple clicks counting towards score
+      if (box.dataset.answered) return;
+      box.dataset.answered = "true";
+
+      if (isCorrect) {
+        box.className = "explanation correct-msg";
+        if (q === 1) box.innerHTML = "<strong>✅ Correct!</strong> Never let the Bank be the 'Sole Judge'. If the officer dislikes you, they can bankrupt you.";
+        if (q === 2) box.innerHTML = "<strong>✅ Correct!</strong> Always add a 'De Minimis' Threshold. Small mistakes shouldn't trigger a massive Cross Default.";
+        correctCount++;
+      } else {
+        box.className = "explanation wrong-msg";
+        box.innerHTML = "<strong>❌ Too Risky.</strong> This exposes your client to huge danger. Try again.";
+        // Reset answered status so they can try again
+        box.dataset.answered = "";
+      }
+
+      if (correctCount === 2) {
+        document.getElementById("finishBtn").style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>
