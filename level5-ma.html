@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Level 5: Boardroom Crisis - CPL</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; background: #111827; margin: 0; padding: 20px; line-height: 1.6; color: #f3f4f6; }
+    .container { max-width: 900px; margin: 0 auto; }
+    
+    .nav { margin-bottom: 20px; }
+    .nav a { color: #9ca3af; text-decoration: none; font-size: 0.9rem; }
+    .nav a:hover { color: white; }
+
+    /* HEADER - CRISIS MODE */
+    .header-card { 
+      background: #4c1d95; /* Deep Purple */
+      color: white; padding: 30px; border-radius: 12px; border: 2px solid #a78bfa; 
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.4); margin-bottom: 30px; 
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(139, 92, 246, 0); } 100% { box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); } }
+    
+    h1 { margin: 0; font-size: 2rem; text-transform: uppercase; letter-spacing: 1px; }
+
+    /* SPLIT VIEW */
+    .split-container { display: flex; gap: 20px; margin-top: 20px; }
+    .panel { background: #1f2937; padding: 25px; border-radius: 12px; border: 1px solid #374151; flex: 1; }
+    
+    /* DOCUMENTS */
+    .notice-box { background: #fef2f2; color: #991b1b; padding: 15px; border-radius: 6px; font-family: sans-serif; margin-bottom: 20px; border-left: 4px solid #ef4444; font-size: 0.9rem; }
+    .clause-box { background: #f0fdf4; color: #166534; padding: 15px; border-radius: 6px; margin-bottom: 20px; border-left: 4px solid #22c55e; font-family: monospace; }
+
+    /* STRATEGY SELECTOR */
+    .strategy-opt { 
+      display: block; background: #374151; padding: 15px; margin-bottom: 10px; border-radius: 8px; 
+      cursor: pointer; border: 1px solid #4b5563; transition: all 0.2s;
+    }
+    .strategy-opt:hover { background: #4b5563; border-color: #a78bfa; }
+    .strategy-opt input { margin-right: 10px; }
+
+    .result-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 100; text-align: center; padding-top: 100px; }
+    .result-box { background: #1f2937; display: inline-block; padding: 40px; border-radius: 12px; max-width: 600px; border: 1px solid #374151; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="nav"><a href="track-ma.html">&larr; Back to Map</a></div>
+
+    <div class="header-card">
+      <h1>⚠️ Critical Alert: Hostile Removal</h1>
+      <p style="margin-top:10px;">Founder A (51%) has called a meeting to fire your client, Founder B (49%), from the Board. You have 1 hour to stop him.</p>
+    </div>
+
+    <div class="split-container">
+      
+      <div class="panel">
+        <h3 style="margin-top:0; color:#9ca3af; text-transform:uppercase; font-size:0.85rem;">The Attack vs. The Defense</h3>
+        
+        <div class="notice-box">
+          <strong>THE ATTACK (Notice of EGM):</strong><br>
+          "Pursuant to Section 169 of the Companies Act, notice is given to remove Founder B as a Director. Since I own 51%, I have the majority votes to pass this resolution."
+        </div>
+
+        <div class="clause-box">
+          <strong>THE DEFENSE (SHA Clause 8.2):</strong><br>
+          "So long as Founder B holds at least 10% of the shares, he shall have a <strong>permanent seat on the Board</strong> of Directors, and cannot be removed without his consent."
+        </div>
+
+        <p style="font-size:0.9rem; color:#d1d5db;">
+          <strong>The Conflict:</strong> Company Law says Majority can fire anyone. The Contract (SHA) says B cannot be fired. Which one wins?
+        </p>
+      </div>
+
+      <div class="panel">
+        <h3 style="margin-top:0; color:#a78bfa;">Choose Defense Strategy</h3>
+        <p style="font-size:0.9rem; color:#d1d5db;">How do we stop the meeting?</p>
+
+        <label class="strategy-opt">
+          <input type="radio" name="strategy" value="weak">
+          <strong>Option A: Accept Defeat</strong><br>
+          <span style="font-size:0.85rem; color:#9ca3af;">"Section 169 gives statutory right to remove directors. We cannot override the Act. He wins."</span>
+        </label>
+
+        <label class="strategy-opt">
+          <input type="radio" name="strategy" value="weak">
+          <strong>Option B: Beg the NCLT</strong><br>
+          <span style="font-size:0.85rem; color:#9ca3af;">"File an oppression case under Section 241. Claim that firing a founder is 'unfair prejudice'." (Takes 3 years to decide).</span>
+        </label>
+
+        <label class="strategy-opt">
+          <input type="radio" name="strategy" value="strong">
+          <strong>Option C: Injunction on Breach of Contract</strong><br>
+          <span style="font-size:0.85rem; color:#9ca3af;">"Go to Court immediately. Ask for an Injunction to stop the meeting. Argue that while he has a *statutory* right, exercising it is a *breach of contract* (SHA)."</span>
+        </label>
+
+        <button onclick="submitStrategy()" style="background:#7c3aed; color:white; width:100%; padding:15px; border:none; border-radius:6px; font-weight:bold; cursor:pointer; margin-top:20px;">Execute Strategy</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="resultOverlay" class="result-overlay">
+    <div class="result-box">
+      <h2 id="resTitle"></h2>
+      <p id="resDesc" style="color:#d1d5db; font-size:1.1rem;"></p>
+      <a href="track-ma.html" id="resBtn" style="display:inline-block; margin-top:20px; padding:10px 25px; border-radius:6px; text-decoration:none; font-weight:bold;"></a>
+    </div>
+  </div>
+
+  <script>
+    function submitStrategy() {
+      const choice = document.querySelector('input[name="strategy"]:checked');
+      if (!choice) return alert("Select an option!");
+
+      const overlay = document.getElementById("resultOverlay");
+      const title = document.getElementById("resTitle");
+      const desc = document.getElementById("resDesc");
+      const btn = document.getElementById("resBtn");
+      
+      overlay.style.display = "block";
+
+      if (choice.value === "strong") {
+        title.innerText = "🏆 BOARD SEAT SAVED!";
+        title.style.color = "#4ade80";
+        desc.innerHTML = "Brilliant Legal Strategy.<br>You successfully argued that while Company Law allows removal, the SHA creates a binding obligation not to vote for it. The Court granted an injunction.";
+        btn.innerText = "Complete M&A Track";
+        btn.style.background = "#7c3aed";
+        btn.style.color = "white";
+      } else {
+        title.innerText = "💀 FOUNDER FIRED";
+        title.style.color = "#ef4444";
+        desc.innerHTML = "Weak Defense.<br>By the time the NCLT hears your oppression case, Founder B will be long gone. You should have enforced the contract (SHA) immediately.";
+        btn.innerText = "Try Again";
+        btn.style.background = "#dc2626";
+        btn.style.color = "white";
+        btn.href = "level5-ma.html"; 
+      }
+    }
+  </script>
+
+</body>
+</html>
