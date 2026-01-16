@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Level 4: Calculating Damages - CPL</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; background: #f8fafc; margin: 0; padding: 20px; line-height: 1.6; color: #1f2937; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .nav { margin-bottom: 20px; }
+    .nav a { color: #666; text-decoration: none; }
+
+    /* HEADER */
+    .header-card { background: white; padding: 30px; border-radius: 12px; border-left: 6px solid #0891b2; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; }
+    h1 { margin: 0; font-size: 1.8rem; color: #111827; }
+
+    /* CALCULATOR UI */
+    .calc-container { background: white; padding: 30px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    
+    .claim-row { display: flex; align-items: center; justify-content: space-between; padding: 15px; border-bottom: 1px solid #f1f5f9; }
+    .claim-desc { flex: 2; }
+    .claim-amount { flex: 1; font-weight: bold; color: #0891b2; text-align: right; padding-right: 20px; }
+    
+    .toggle-switch { position: relative; display: inline-block; width: 50px; height: 26px; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+    .slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+    input:checked + .slider { background-color: #0891b2; }
+    input:checked + .slider:before { transform: translateX(24px); }
+
+    .total-box { margin-top: 20px; font-size: 1.2rem; font-weight: bold; text-align: right; border-top: 2px solid #0891b2; padding-top: 15px; }
+
+    .btn-submit { width: 100%; padding: 15px; background: #155e75; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; color: white; margin-top: 20px; }
+    .btn-submit:hover { background: #0e7490; }
+
+    .result-box { display: none; margin-top: 20px; padding: 20px; border-radius: 8px; text-align: center; }
+    .success { background: #ecfdf5; color: #065f46; border: 1px solid #6ee7b7; }
+    .fail { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="nav"><a href="track-dispute.html">&larr; Back to Dispute Map</a></div>
+
+    <div class="header-card">
+      <h1>Level 4: The Statement of Claim</h1>
+      <p>The client is angry and wants to claim ₹100 Crores. Your job is to select only the <strong>Legally Valid</strong> claims. If you claim junk, the Arbitrator will lose respect for you.</p>
+    </div>
+
+    <div class="calc-container">
+      <h3>📋 Select Valid Claims</h3>
+      
+      <div class="claim-row">
+        <div class="claim-desc">
+          <strong>1. Cost of Completion</strong><br>
+          <span style="font-size:0.85rem; color:#666;">We had to hire a new contractor to finish the work left undone.</span>
+        </div>
+        <div class="claim-amount">₹ 5 Cr</div>
+        <label class="toggle-switch"><input type="checkbox" id="c1"><span class="slider"></span></label>
+      </div>
+
+      <div class="claim-row">
+        <div class="claim-desc">
+          <strong>2. Mental Harassment</strong><br>
+          <span style="font-size:0.85rem; color:#666;">Our CEO was very stressed due to the delay. (Claiming damages for a Company).</span>
+        </div>
+        <div class="claim-amount">₹ 2 Cr</div>
+        <label class="toggle-switch"><input type="checkbox" id="c2"><span class="slider"></span></label>
+      </div>
+
+      <div class="claim-row">
+        <div class="claim-desc">
+          <strong>3. Loss of Profit (Proven)</strong><br>
+          <span style="font-size:0.85rem; color:#666;">We have emails showing we lost a specific tenant who cancelled because the building wasn't ready.</span>
+        </div>
+        <div class="claim-amount">₹ 3 Cr</div>
+        <label class="toggle-switch"><input type="checkbox" id="c3"><span class="slider"></span></label>
+      </div>
+
+      <div class="claim-row">
+        <div class="claim-desc">
+          <strong>4. Hypothetical Future Loss</strong><br>
+          <span style="font-size:0.85rem; color:#666;">"If this building was ready, maybe Google would have bought it for 10x price." (Speculation).</span>
+        </div>
+        <div class="claim-amount">₹ 50 Cr</div>
+        <label class="toggle-switch"><input type="checkbox" id="c4"><span class="slider"></span></label>
+      </div>
+
+      <div class="total-box">
+        Total Claim: <span id="totalDisplay">0</span> Cr
+      </div>
+
+      <button class="btn-submit" onclick="submitClaim()">Submit Statement of Claim</button>
+
+      <div id="result" class="result-box"></div>
+      
+      <div id="finishBtn" style="display:none; text-align:center; margin-top:20px;">
+        <a href="track-dispute.html" style="background:#155e75; color:white; padding:12px 25px; border-radius:6px; text-decoration:none;">Level 4 Complete - Return to Map</a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // Update Total Real-time
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(cb => cb.addEventListener('change', updateTotal));
+
+    function updateTotal() {
+      let total = 0;
+      if (document.getElementById('c1').checked) total += 5;
+      if (document.getElementById('c2').checked) total += 2;
+      if (document.getElementById('c3').checked) total += 3;
+      if (document.getElementById('c4').checked) total += 50;
+      document.getElementById('totalDisplay').innerText = total;
+    }
+
+    function submitClaim() {
+      const c1 = document.getElementById('c1').checked; // Valid (Direct)
+      const c2 = document.getElementById('c2').checked; // Invalid (Company can't suffer mental harassment)
+      const c3 = document.getElementById('c3').checked; // Valid (Proven Loss of Profit)
+      const c4 = document.getElementById('c4').checked; // Invalid (Remote/Speculative)
+      const box = document.getElementById("result");
+
+      if (c1 && c3 && !c2 && !c4) {
+        box.style.display = "block";
+        box.className = "result-box success";
+        box.innerHTML = "<strong>✅ Perfect Calculation! (Total: ₹8 Cr)</strong><br>You claimed Direct Costs and Proven Profit. You wisely rejected the 'Mental Harassment' and 'Speculative' claims.";
+        document.getElementById("finishBtn").style.display = "block";
+      } else {
+        box.style.display = "block";
+        box.className = "result-box fail";
+        box.innerHTML = "<strong>❌ Incorrect.</strong><br>Hint: Companies don't have feelings (No Mental Harassment), and you can't claim for 'Maybe' future deals (Remote).";
+      }
+    }
+  </script>
+
+</body>
+</html>
