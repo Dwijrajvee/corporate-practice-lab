@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Level 3: The Appointment - CPL</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; background: #f8fafc; margin: 0; padding: 20px; line-height: 1.6; color: #1f2937; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .nav { margin-bottom: 20px; }
+    .nav a { color: #666; text-decoration: none; }
+
+    /* HEADER */
+    .header-card { background: white; padding: 30px; border-radius: 12px; border-left: 6px solid #4f46e5; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; }
+    h1 { margin: 0; font-size: 1.8rem; color: #111827; }
+
+    /* LESSON */
+    .concept-box { background: #eef2ff; border: 1px solid #c7d2fe; color: #3730a3; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+
+    /* PROFILES */
+    .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+    
+    .profile-card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; transition: transform 0.2s; }
+    .profile-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+    
+    .avatar { width: 80px; height: 80px; background: #e2e8f0; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+    .name { font-weight: bold; font-size: 1.1rem; margin-bottom: 5px; color: #1e3a8a; }
+    .details { font-size: 0.9rem; color: #64748b; margin-bottom: 20px; text-align: left; background: #f8fafc; padding: 10px; border-radius: 6px; }
+
+    .btn-select { width: 100%; padding: 10px; background: #1e3a8a; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    .btn-select:hover { background: #1e40af; }
+
+    /* FEEDBACK OVERLAY */
+    .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 100; align-items: center; justify-content: center; }
+    .msg-box { background: white; padding: 40px; border-radius: 12px; max-width: 500px; text-align: center; }
+    .btn-close { margin-top: 20px; padding: 10px 20px; border-radius: 6px; border: none; cursor: pointer; font-weight: bold; }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="nav"><a href="track-dispute.html">&larr; Back to Dispute Map</a></div>
+
+    <div class="header-card">
+      <h1>Level 3: Who decides your fate?</h1>
+      <p>A bad arbitrator can ruin a good case. You must pick someone <strong>Neutral</strong> and <strong>Independent</strong>.</p>
+    </div>
+
+    <div class="concept-box">
+      <strong>⚠️ The Red Flag Rules (Schedule VII)</strong>
+      <ul style="margin-top:5px; padding-left:20px;">
+        <li>An arbitrator cannot be an <strong>Employee, Consultant, or Advisor</strong> to any party.</li>
+        <li>An arbitrator cannot hold <strong>Shares</strong> in any party.</li>
+        <li><strong>Bias Check:</strong> If they have a financial interest in the outcome, they are disqualified.</li>
+      </ul>
+    </div>
+    
+    
+
+    <div class="grid-container">
+      
+      <div class="profile-card">
+        <div class="avatar">👨‍⚖️</div>
+        <div class="name">Justice (Retd.) Sharma</div>
+        <div class="details">
+          ✅ Former Supreme Court Judge.<br>
+          ✅ 40 Years Experience.<br>
+          ❌ <strong>Disclosure:</strong> Currently acts as a Legal Advisor to the Claimant's parent company.
+        </div>
+        <button class="btn-select" onclick="checkChoice('A')">Appoint Sharma</button>
+      </div>
+
+      <div class="profile-card">
+        <div class="avatar">👷</div>
+        <div class="name">Mr. Engineer Gupta</div>
+        <div class="details">
+          ✅ Chief Civil Engineer (IIT Delhi).<br>
+          ✅ Expert in Construction.<br>
+          ❌ <strong>Risk:</strong> No legal degree. Might misunderstand contract law.
+        </div>
+        <button class="btn-select" onclick="checkChoice('B')">Appoint Gupta</button>
+      </div>
+
+      <div class="profile-card">
+        <div class="avatar">👩‍⚖️</div>
+        <div class="name">Ms. Adv. Iyer</div>
+        <div class="details">
+          ✅ Senior Advocate, High Court.<br>
+          ✅ Expert in Arbitration Law.<br>
+          ✅ <strong>Clean:</strong> No connection to either party.
+        </div>
+        <button class="btn-select" onclick="checkChoice('C')">Appoint Iyer</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="overlay" class="overlay">
+    <div class="msg-box">
+      <h2 id="msgTitle"></h2>
+      <p id="msgDesc"></p>
+      <button id="msgBtn" class="btn-close" onclick="closeOverlay()"></button>
+    </div>
+  </div>
+
+  <script>
+    function checkChoice(choice) {
+      const overlay = document.getElementById("overlay");
+      const title = document.getElementById("msgTitle");
+      const desc = document.getElementById("msgDesc");
+      const btn = document.getElementById("msgBtn");
+      
+      overlay.style.display = "flex";
+
+      if (choice === 'A') {
+        title.innerText = "❌ DISQUALIFIED";
+        title.style.color = "#dc2626";
+        desc.innerText = "Justice Sharma is ineligible under Schedule VII because he is an Advisor to the affiliate company. The award would be set aside immediately.";
+        btn.innerText = "Try Again";
+        btn.style.background = "#fee2e2";
+        btn.style.color = "#dc2626";
+        btn.onclick = closeOverlay;
+      }
+      else if (choice === 'B') {
+        title.innerText = "⚠️ RISKY CHOICE";
+        title.style.color = "#d97706";
+        desc.innerText = "He is allowed (Technical Expert), but risky. He might not understand 'Evidence Law' or 'Limitation'. Usually, we prefer a Lawyer as the sole arbitrator.";
+        btn.innerText = "Try Again";
+        btn.style.background = "#fef3c7";
+        btn.style.color = "#d97706";
+        btn.onclick = closeOverlay;
+      }
+      else if (choice === 'C') {
+        title.innerText = "✅ PERFECT CHOICE";
+        title.style.color = "#16a34a";
+        desc.innerText = "Ms. Iyer is neutral, experienced, and legally trained. This ensures a valid and enforceable award.";
+        btn.innerText = "Level Complete";
+        btn.style.background = "#16a34a";
+        btn.style.color = "white";
+        btn.onclick = function() { window.location.href = 'track-dispute.html'; };
+      }
+    }
+
+    function closeOverlay() {
+      document.getElementById("overlay").style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
