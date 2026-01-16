@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Level 1: Antitrust Basics - CPL</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; background: #fff7ed; margin: 0; padding: 20px; line-height: 1.6; color: #1f2937; }
+    .container { max-width: 800px; margin: 0 auto; }
+    .nav { margin-bottom: 20px; }
+    .nav a { color: #666; text-decoration: none; }
+
+    /* HEADER */
+    .header-card { background: white; padding: 30px; border-radius: 12px; border-left: 6px solid #ea580c; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; }
+    h1 { margin: 0; font-size: 1.8rem; color: #111827; }
+
+    /* CHEAT SHEET */
+    .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+    .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    .card-title { font-weight: bold; color: #ea580c; margin-bottom: 10px; display: block; text-transform: uppercase; font-size: 0.85rem; }
+
+    /* QUIZ */
+    .quiz-container { background: white; padding: 30px; border-radius: 12px; margin-top: 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    .question { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
+    .options label { display: block; margin: 8px 0; cursor: pointer; }
+    
+    .btn-check { background: #431407; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; margin-top: 10px; }
+    .hidden-success { display: none; background: #ffedd5; border: 1px solid #fdba74; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center; color: #9a3412; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="nav"><a href="track-antitrust.html">&larr; Back to Antitrust Map</a></div>
+
+    <div class="header-card">
+      <h1>Level 1: The Three Sins</h1>
+      <p>Competition Law isn't about protecting competitors. It's about protecting the <strong>process of competition</strong>. Learn the 3 big rules.</p>
+    </div>
+
+    <div class="grid-container">
+      <div class="card">
+        <span class="card-title">1. Anti-Competitive Agreements (Cartels)</span>
+        <p style="font-size:0.9rem;">
+          "The Conspiracy." Competitors secretly agreeing to fix prices or limit supply. This is the worst crime. <br><strong>Penalty:</strong> Up to 3x Profit.
+        </p>
+      </div>
+      <div class="card">
+        <span class="card-title">2. Abuse of Dominance</span>
+        <p style="font-size:0.9rem;">
+          "The Bully." Being big (Monopoly) is NOT illegal. But using that size to crush rivals (e.g., Predatory Pricing) IS illegal.
+        </p>
+      </div>
+      <div class="card">
+        <span class="card-title">3. Merger Control (Combinations)</span>
+        <p style="font-size:0.9rem;">
+          "The Checkpoint." If two big companies merge, they must ask the CCI (Competition Commission) for permission <em>before</em> closing the deal.
+        </p>
+      </div>
+      <div class="card">
+        <span class="card-title">4. Gun Jumping</span>
+        <p style="font-size:0.9rem;">
+          "The Premature Celebration." If you start acting like one company (sharing prices/strategy) before CCI approval, you get fined heavily.
+        </p>
+      </div>
+    </div>
+
+    <div class="quiz-container">
+      <h2>📝 Quick Knowledge Check</h2>
+      
+      <div class="question" id="q1">
+        <strong>1. Your client has 90% market share. Are they breaking the law?</strong>
+        <div class="options">
+          <label><input type="radio" name="q1" value="wrong"> Yes, having >50% is automatically illegal.</label>
+          <label><input type="radio" name="q1" value="correct"> No. Being dominant is legal. Only <em>abusing</em> it (e.g., unfair pricing) is illegal.</label>
+          <label><input type="radio" name="q1" value="wrong"> Yes, unless they are a government company.</label>
+        </div>
+      </div>
+
+      <div class="question" id="q2">
+        <strong>2. Two CEOs meet for coffee and agree: "Let's both raise prices by 10% next week." Is this illegal?</strong>
+        <div class="options">
+          <label><input type="radio" name="q2" value="wrong"> No, it was just a verbal coffee chat, no contract signed.</label>
+          <label><input type="radio" name="q2" value="correct"> Yes! Informal agreements are still Cartels. They will go to jail.</label>
+          <label><input type="radio" name="q2" value="wrong"> Only if they actually raise the prices.</label>
+        </div>
+      </div>
+
+      <button class="btn-check" onclick="checkQuiz()">Submit Answers</button>
+
+      <div id="successMsg" class="hidden-success">
+        <h3>🎉 Level 1 Complete!</h3>
+        <p>You know the rules. Now let's catch some criminals.</p>
+        <a href="track-antitrust.html" style="background:#ea580c; color:white; padding:10px 20px; text-decoration:none; border-radius:6px; display:inline-block; font-weight:bold;">Return to Map</a>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    function checkQuiz() {
+      const a1 = document.querySelector('input[name="q1"]:checked')?.value;
+      const a2 = document.querySelector('input[name="q2"]:checked')?.value;
+
+      if (a1 === "correct" && a2 === "correct") {
+        document.getElementById("successMsg").style.display = "block";
+        window.scrollTo(0, document.body.scrollHeight);
+      } else {
+        alert("Incorrect. Remember: Dominance is OK, Cartels are NEVER OK.");
+      }
+    }
+  </script>
+
+</body>
+</html>
