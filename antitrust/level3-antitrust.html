@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Level 3: Gun Jumping - CPL</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; background: #fff7ed; margin: 0; padding: 20px; line-height: 1.6; color: #1f2937; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .nav { margin-bottom: 20px; }
+    .nav a { color: #666; text-decoration: none; }
+
+    /* HEADER */
+    .header-card { background: white; padding: 30px; border-radius: 12px; border-left: 6px solid #b45309; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 20px; }
+    h1 { margin: 0; font-size: 1.8rem; color: #111827; }
+
+    /* LESSON */
+    .concept-box { background: #ffedd5; border: 1px solid #fdba74; color: #7c2d12; padding: 20px; border-radius: 8px; margin-bottom: 30px; }
+
+    /* SCENARIO UI */
+    .chat-box { background: white; padding: 25px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #fed7aa; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    
+    .ceo-msg { 
+      background: #f3f4f6; padding: 15px; border-radius: 8px; margin-bottom: 15px; 
+      border-left: 4px solid #4b5563; font-family: sans-serif; color: #374151; font-style: italic;
+    }
+    
+    .btn-group { display: flex; gap: 10px; }
+    .btn-yes { flex: 1; background: #dc2626; color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: opacity 0.2s; }
+    .btn-no { flex: 1; background: #16a34a; color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer; font-weight: bold; transition: opacity 0.2s; }
+    .btn-yes:hover, .btn-no:hover { opacity: 0.9; }
+
+    /* FEEDBACK */
+    .feedback { display: none; margin-top: 15px; padding: 15px; border-radius: 6px; font-size: 0.9rem; }
+    .correct-msg { background: #ecfdf5; color: #065f46; border: 1px solid #6ee7b7; }
+    .wrong-msg { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+
+    .finish-area { text-align: center; margin-top: 30px; display: none; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="nav"><a href="track-antitrust.html">&larr; Back to Antitrust Map</a></div>
+
+    <div class="header-card">
+      <h1>Level 3: The Premature Merger</h1>
+      <p>Two Airlines (AirBlue and SkyRed) have signed a merger deal. But the CCI approval is still 6 months away. The CEOs are impatient.</p>
+    </div>
+
+    <div class="concept-box">
+      <strong>⚠️ The Concept: "Standstill Obligation"</strong>
+      <p style="margin-top:5px;">
+        Until the CCI says "Approved," the two companies must compete as strangers.
+        <br><strong>Rule:</strong> You cannot act as one entity yet. This is called "Gun Jumping."
+      </p>
+    </div>
+    
+    
+
+    <div class="chat-box">
+      <strong>Question 1: IT Integration</strong>
+      <div class="ceo-msg">
+        "Lawyer, it will take months to merge our IT systems. Can we start migrating SkyRed's customer database into AirBlue's servers <strong>today</strong> so we are ready for Day 1?"
+      </div>
+      <div class="btn-group">
+        <button class="btn-yes" onclick="checkAnswer(1, 'yes')">Yes, allow it.</button>
+        <button class="btn-no" onclick="checkAnswer(1, 'no')">No! Stop.</button>
+      </div>
+      <div id="ans1" class="feedback"></div>
+    </div>
+
+    <div class="chat-box">
+      <strong>Question 2: Joint Marketing</strong>
+      <div class="ceo-msg">
+        "Can we launch a joint marketing campaign saying 'AirBlue and SkyRed are now One Big Family'?"
+      </div>
+      <div class="btn-group">
+        <button class="btn-yes" onclick="checkAnswer(2, 'yes')">Yes, allow it.</button>
+        <button class="btn-no" onclick="checkAnswer(2, 'no')">No! Stop.</button>
+      </div>
+      <div id="ans2" class="feedback"></div>
+    </div>
+
+    <div class="chat-box">
+      <strong>Question 3: Deal Planning</strong>
+      <div class="ceo-msg">
+        "Okay, fine. Can we at least set up a 'Clean Team' of consultants to *plan* the integration strategy on paper, without actually moving data?"
+      </div>
+      <div class="btn-group">
+        <button class="btn-no" onclick="checkAnswer(3, 'yes')">Yes, allow it.</button> <button class="btn-yes" onclick="checkAnswer(3, 'no')">No! Stop.</button>
+      </div>
+      <div id="ans3" class="feedback"></div>
+    </div>
+
+    <div id="finishArea" class="finish-area">
+      <a href="track-antitrust.html" style="background:#431407; color:white; padding:12px 25px; border-radius:6px; text-decoration:none; font-weight:bold;">Level Complete - Return to Map</a>
+    </div>
+
+  </div>
+
+  <script>
+    let score = 0;
+
+    function checkAnswer(q, choice) {
+      const box = document.getElementById("ans" + q);
+      box.style.display = "block";
+      
+      let correct = false;
+      let msg = "";
+
+      // Q1: NO. Integrating IT systems transfers control. Gun Jumping.
+      if (q === 1) {
+        if (choice === 'no') { correct = true; msg = "Correct! Integrating data transfers control. We must wait for approval."; }
+        else { msg = "Illegal! You just merged the companies before approval. The CCI will fine us."; }
+      }
+
+      // Q2: NO. Marketing as "One Entity" confuses customers and signals premature merger.
+      if (q === 2) {
+        if (choice === 'no') { correct = true; msg = "Correct! We cannot present ourselves as one entity yet."; }
+        else { msg = "Illegal! You cannot act like a single company until the law says so."; }
+      }
+
+      // Q3: YES. "Planning" is allowed. "Clean Teams" are the standard legal way to do this.
+      if (q === 3) {
+        if (choice === 'yes') { correct = true; msg = "Correct! Planning is allowed, as long as operational control doesn't change."; }
+        else { msg = "Incorrect. We ARE allowed to plan. We just can't execute."; }
+      }
+
+      if (correct) {
+        box.className = "feedback correct-msg";
+        box.innerText = msg;
+        score++;
+        // Disable buttons
+        const parent = box.parentElement;
+        parent.querySelectorAll("button").forEach(b => b.disabled = true);
+      } else {
+        box.className = "feedback wrong-msg";
+        box.innerText = msg;
+      }
+
+      if (score === 3) {
+        document.getElementById("finishArea").style.display = "block";
+      }
+    }
+  </script>
+
+</body>
+</html>
