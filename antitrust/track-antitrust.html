@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Antitrust Track - CPL</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; background: #fff7ed; margin: 0; padding: 20px; color: #1f2937; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .nav { margin-bottom: 20px; }
+    .nav a { color: #666; text-decoration: none; }
+
+    /* HEADER */
+    .header-card { 
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); 
+      color: white; padding: 40px; border-radius: 12px; margin-bottom: 40px; 
+      box-shadow: 0 4px 10px rgba(234, 88, 12, 0.2);
+    }
+    h1 { margin: 0; font-size: 2.2rem; }
+    .progress-bar { background: rgba(255,255,255,0.2); height: 8px; border-radius: 4px; margin-top: 15px; max-width: 300px; }
+    .progress-fill { background: #fdba74; height: 100%; border-radius: 4px; width: 0%; } 
+
+    /* LEVEL CARDS */
+    .level-card { 
+      background: white; padding: 0; border-radius: 12px; margin-bottom: 25px; 
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; overflow: hidden; position: relative;
+      transition: transform 0.2s; border: 1px solid #fed7aa;
+    }
+    .level-card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+
+    .level-number { 
+      background: #ffedd5; width: 80px; display: flex; flex-direction: column; 
+      align-items: center; justify-content: center; font-weight: 900; font-size: 1.5rem; color: #fb923c;
+      border-right: 1px solid #fed7aa;
+    }
+    .level-content { padding: 25px; flex: 1; }
+    
+    .level-title { font-weight: 800; font-size: 1.2rem; margin-bottom: 5px; color: #431407; }
+    .level-desc { color: #78350f; font-size: 0.95rem; margin-bottom: 15px; }
+    
+    .tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; padding: 4px 8px; border-radius: 4px; margin-right: 10px; }
+    .tag-cheat { background: #fff7ed; color: #ea580c; }
+    .tag-task { background: #ffedd5; color: #c2410c; }
+
+    /* STATUS STYLES */
+    .unlocked .level-number { background: #ea580c; color: white; }
+    .locked { opacity: 0.6; pointer-events: none; grayscale: 1; }
+    .locked .level-number { background: #e5e7eb; color: #9ca3af; }
+
+    .btn-action { 
+      text-decoration: none; background: #431407; color: white; padding: 8px 20px; 
+      border-radius: 6px; font-size: 0.9rem; font-weight: bold; float: right;
+    }
+    .btn-action:hover { background: #000; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="nav"><a href="../dashboard.html">&larr; Back to Dashboard</a></div>
+
+    <div class="header-card">
+      <h1>⚖️ Competition & Antitrust</h1>
+      <p style="opacity:0.9; margin-top:5px;">Master the rules of the Free Market. Keep the monopolies in check.</p>
+      
+      <div style="margin-top:20px; font-size:0.9rem; font-weight:bold;">YOUR PROGRESS: Level 0/5</div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+    </div>
+
+    <div class="level-card unlocked">
+      <div class="level-number">01</div>
+      <div class="level-content">
+        <div class="level-title">The Rulebook</div>
+        <p class="level-desc">Cartels, Abuse of Dominance, and the CCI. Learn the 3 pillars of Competition Law.</p>
+        <div>
+          <span class="tag tag-cheat">📄 Cheat Sheet: Key Terms</span>
+          <span class="tag tag-task">📝 Task: Concept Quiz</span>
+        </div>
+        <a href="level1-antitrust.html" class="btn-action">Start Level 1</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">02</div>
+      <div class="level-content">
+        <div class="level-title">Cartel Hunter</div>
+        <p class="level-desc">Review a client's internal emails. Find the hidden messages that prove they are fixing prices.</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">03</div>
+      <div class="level-content">
+        <div class="level-title">Gun Jumping</div>
+        <p class="level-desc">Two merging companies want to share secrets. Tell them what they CANNOT do before approval.</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">04</div>
+      <div class="level-content">
+        <div class="level-title">Market Share Math (HHI)</div>
+        <p class="level-desc">Calculate the Herfindahl-Hirschman Index to see if a merger creates a Monopoly.</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">05</div>
+      <div class="level-content">
+        <div class="level-title">The Dawn Raid</div>
+        <p class="level-desc">The CCI is at the door with a search warrant. Manage the crisis without obstructing justice.</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
