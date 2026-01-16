@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dispute Resolution Track - CPL</title>
+  <style>
+    body { font-family: -apple-system, system-ui, sans-serif; background: #f8fafc; margin: 0; padding: 20px; color: #1f2937; }
+    .container { max-width: 900px; margin: 0 auto; }
+    .nav { margin-bottom: 20px; }
+    .nav a { color: #666; text-decoration: none; }
+
+    /* HEADER */
+    .header-card { 
+      background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); 
+      color: white; padding: 40px; border-radius: 12px; margin-bottom: 40px; 
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+    }
+    h1 { margin: 0; font-size: 2.2rem; }
+    .progress-bar { background: rgba(255,255,255,0.2); height: 8px; border-radius: 4px; margin-top: 15px; max-width: 300px; }
+    .progress-fill { background: #93c5fd; height: 100%; border-radius: 4px; width: 0%; } 
+
+    /* LEVEL CARDS */
+    .level-card { 
+      background: white; padding: 0; border-radius: 12px; margin-bottom: 25px; 
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: flex; overflow: hidden; position: relative;
+      transition: transform 0.2s; border: 1px solid #e2e8f0;
+    }
+    .level-card:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+
+    .level-number { 
+      background: #f1f5f9; width: 80px; display: flex; flex-direction: column; 
+      align-items: center; justify-content: center; font-weight: 900; font-size: 1.5rem; color: #94a3b8;
+      border-right: 1px solid #e2e8f0;
+    }
+    .level-content { padding: 25px; flex: 1; }
+    
+    .level-title { font-weight: 800; font-size: 1.2rem; margin-bottom: 5px; color: #1e3a8a; }
+    .level-desc { color: #475569; font-size: 0.95rem; margin-bottom: 15px; }
+    
+    .tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; padding: 4px 8px; border-radius: 4px; margin-right: 10px; }
+    .tag-cheat { background: #eff6ff; color: #2563eb; }
+    .tag-task { background: #f0f9ff; color: #0284c7; }
+
+    /* STATUS STYLES */
+    .unlocked .level-number { background: #2563eb; color: white; }
+    .locked { opacity: 0.6; pointer-events: none; grayscale: 1; }
+    .locked .level-number { background: #e2e8f0; color: #94a3b8; }
+
+    .btn-action { 
+      text-decoration: none; background: #1e3a8a; color: white; padding: 8px 20px; 
+      border-radius: 6px; font-size: 0.9rem; font-weight: bold; float: right;
+    }
+    .btn-action:hover { background: #000; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="nav"><a href="../dashboard.html">&larr; Back to Dashboard</a></div>
+
+    <div class="header-card">
+      <h1>⚖️ Dispute Resolution</h1>
+      <p style="opacity:0.9; margin-top:5px;">Litigation, Arbitration, and Strategy. Learn how to win.</p>
+      
+      <div style="margin-top:20px; font-size:0.9rem; font-weight:bold;">YOUR PROGRESS: Level 0/5</div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+    </div>
+
+    <div class="level-card unlocked">
+      <div class="level-number">01</div>
+      <div class="level-content">
+        <div class="level-title">The Forum Choice</div>
+        <p class="level-desc">Court vs. Arbitration. Seat vs. Venue. Master the basics before you fight.</p>
+        <div>
+          <span class="tag tag-cheat">📄 Cheat Sheet: Arbitration Act</span>
+          <span class="tag tag-task">📝 Task: Jurisdiction Quiz</span>
+        </div>
+        <a href="level1-dispute.html" class="btn-action">Start Level 1</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">02</div>
+      <div class="level-content">
+        <div class="level-title">The Trigger (Section 21)</div>
+        <p class="level-desc">Draft the "Notice of Arbitration." If you miss a date or a detail here, the case is dead.</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">03</div>
+      <div class="level-content">
+        <div class="level-title">Appointing the Judge</div>
+        <p class="level-desc">Select your Arbitrator. Watch out for "Conflict of Interest" (Schedule V/VII).</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">04</div>
+      <div class="level-content">
+        <div class="level-title">The Claim Amount</div>
+        <p class="level-desc">Calculate Damages. Direct Loss vs. Loss of Profit. Don't claim too much or too little.</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+    <div class="level-card locked">
+      <div class="level-number">05</div>
+      <div class="level-content">
+        <div class="level-title">Section 34 Challenge</div>
+        <p class="level-desc">You lost the award. Find a legal ground to "Set Aside" the order in High Court.</p>
+        <a href="#" class="btn-action">Locked 🔒</a>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
